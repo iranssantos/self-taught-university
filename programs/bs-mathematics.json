@@ -1,0 +1,2110 @@
+{
+ "format": "stu-course",
+ "version": 1,
+ "course": {
+  "title": "Bachelor of Science in Mathematics",
+  "description": "A mathematics major in the structure of MIT Course 18: 17 fixed courses (mathematics, physics, and computing with mathematical content), 11 electives, 4 free electives, and 2 seminars, 32 courses in total.",
+  "author": "Self-Taught University",
+  "version": "1.0",
+  "basedOn": "MIT Course 18 (Mathematics)",
+  "language": "en"
+ },
+ "settings": {
+  "monthsPerPeriod": 4,
+  "periodsPerYear": 3,
+  "coursesPerPeriod": 2,
+  "minCourses": 32,
+  "minSeminars": 2,
+  "minElectives": 11
+ },
+ "books": [
+  {
+   "id": "b1",
+   "authors": "James Stewart, Daniel Clegg and Saleem Watson",
+   "title": "Calculus: Early Transcendentals",
+   "edition": "9th ed.",
+   "publisher": "Cengage",
+   "year": 2020,
+   "url": ""
+  },
+  {
+   "id": "b2",
+   "authors": "Joel Hass, Christopher Heil and Maurice D. Weir",
+   "title": "Thomas' Calculus",
+   "edition": "14th ed.",
+   "publisher": "Pearson",
+   "year": 2018,
+   "url": ""
+  },
+  {
+   "id": "b3",
+   "authors": "Gilbert Strang",
+   "title": "Introduction to Linear Algebra",
+   "edition": "6th ed.",
+   "publisher": "Wellesley-Cambridge Press",
+   "year": 2023,
+   "url": ""
+  },
+  {
+   "id": "b4",
+   "authors": "Serge Lang",
+   "title": "Introduction to Linear Algebra",
+   "edition": "2nd ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics)",
+   "year": 1986,
+   "url": ""
+  },
+  {
+   "id": "b5",
+   "authors": "Eric Lehman, F. Thomson Leighton and Albert R. Meyer",
+   "title": "Mathematics for Computer Science",
+   "edition": "",
+   "publisher": "MIT (free online)",
+   "year": 2017,
+   "url": ""
+  },
+  {
+   "id": "b6",
+   "authors": "Daniel J. Velleman",
+   "title": "How to Prove It: A Structured Approach",
+   "edition": "3rd ed.",
+   "publisher": "Cambridge University Press",
+   "year": 2019,
+   "url": ""
+  },
+  {
+   "id": "b7",
+   "authors": "John B. Fraleigh",
+   "title": "A First Course in Abstract Algebra",
+   "edition": "7th ed.",
+   "publisher": "Addison-Wesley",
+   "year": 2003,
+   "url": ""
+  },
+  {
+   "id": "b8",
+   "authors": "Michael Artin",
+   "title": "Algebra",
+   "edition": "2nd ed.",
+   "publisher": "Pearson",
+   "year": 2011,
+   "url": ""
+  },
+  {
+   "id": "b9",
+   "authors": "Stephen Abbott",
+   "title": "Understanding Analysis",
+   "edition": "2nd ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics)",
+   "year": 2015,
+   "url": ""
+  },
+  {
+   "id": "b10",
+   "authors": "Walter Rudin",
+   "title": "Principles of Mathematical Analysis",
+   "edition": "3rd ed.",
+   "publisher": "McGraw-Hill",
+   "year": 1976,
+   "url": ""
+  },
+  {
+   "id": "b11",
+   "authors": "Sheldon Ross",
+   "title": "A First Course in Probability",
+   "edition": "10th ed.",
+   "publisher": "Pearson",
+   "year": 2019,
+   "url": ""
+  },
+  {
+   "id": "b12",
+   "authors": "Morris H. DeGroot and Mark J. Schervish",
+   "title": "Probability and Statistics",
+   "edition": "4th ed.",
+   "publisher": "Pearson",
+   "year": 2012,
+   "url": ""
+  },
+  {
+   "id": "b13",
+   "authors": "Sheldon Axler",
+   "title": "Linear Algebra Done Right",
+   "edition": "4th ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics), open access",
+   "year": 2024,
+   "url": ""
+  },
+  {
+   "id": "b14",
+   "authors": "Steven C. Chapra and Raymond P. Canale",
+   "title": "Numerical Methods for Engineers",
+   "edition": "8th ed.",
+   "publisher": "McGraw-Hill",
+   "year": 2021,
+   "url": ""
+  },
+  {
+   "id": "b15",
+   "authors": "Richard L. Burden, J. Douglas Faires and Annette M. Burden",
+   "title": "Numerical Analysis",
+   "edition": "10th ed.",
+   "publisher": "Cengage",
+   "year": 2016,
+   "url": ""
+  },
+  {
+   "id": "b16",
+   "authors": "William E. Boyce, Richard C. DiPrima and Douglas B. Meade",
+   "title": "Elementary Differential Equations and Boundary Value Problems",
+   "edition": "11th ed.",
+   "publisher": "Wiley",
+   "year": 2017,
+   "url": ""
+  },
+  {
+   "id": "b17",
+   "authors": "George F. Simmons",
+   "title": "Differential Equations with Applications and Historical Notes",
+   "edition": "3rd ed.",
+   "publisher": "CRC Press",
+   "year": 2016,
+   "url": ""
+  },
+  {
+   "id": "b18",
+   "authors": "Edward B. Saff and Arthur David Snider",
+   "title": "Fundamentals of Complex Analysis with Applications to Engineering, Science, and Mathematics",
+   "edition": "3rd ed.",
+   "publisher": "Pearson",
+   "year": 2003,
+   "url": ""
+  },
+  {
+   "id": "b19",
+   "authors": "Elias M. Stein and Rami Shakarchi",
+   "title": "Complex Analysis (Princeton Lectures in Analysis II)",
+   "edition": "",
+   "publisher": "Princeton University Press",
+   "year": 2003,
+   "url": ""
+  },
+  {
+   "id": "b20",
+   "authors": "James R. Munkres",
+   "title": "Topology",
+   "edition": "2nd ed.",
+   "publisher": "Prentice Hall",
+   "year": 2000,
+   "url": ""
+  },
+  {
+   "id": "b21",
+   "authors": "Bert Mendelson",
+   "title": "Introduction to Topology",
+   "edition": "3rd ed.",
+   "publisher": "Dover",
+   "year": 1990,
+   "url": ""
+  },
+  {
+   "id": "b22",
+   "authors": "Douglas B. West",
+   "title": "Introduction to Graph Theory",
+   "edition": "2nd ed.",
+   "publisher": "Prentice Hall",
+   "year": 2001,
+   "url": ""
+  },
+  {
+   "id": "b23",
+   "authors": "Peter J. Cameron",
+   "title": "Combinatorics: Topics, Techniques, Algorithms",
+   "edition": "",
+   "publisher": "Cambridge University Press",
+   "year": 1994,
+   "url": ""
+  },
+  {
+   "id": "b24",
+   "authors": "David S. Dummit and Richard M. Foote",
+   "title": "Abstract Algebra",
+   "edition": "3rd ed.",
+   "publisher": "Wiley",
+   "year": 2004,
+   "url": ""
+  },
+  {
+   "id": "b25",
+   "authors": "Sheldon Axler",
+   "title": "Measure, Integration & Real Analysis",
+   "edition": "",
+   "publisher": "Springer (Graduate Texts in Mathematics 282), open access",
+   "year": 2020,
+   "url": ""
+  },
+  {
+   "id": "b26",
+   "authors": "Robert G. Bartle",
+   "title": "The Elements of Integration and Lebesgue Measure",
+   "edition": "",
+   "publisher": "Wiley",
+   "year": 1995,
+   "url": ""
+  },
+  {
+   "id": "b27",
+   "authors": "Walter A. Strauss",
+   "title": "Partial Differential Equations: An Introduction",
+   "edition": "2nd ed.",
+   "publisher": "Wiley",
+   "year": 2008,
+   "url": ""
+  },
+  {
+   "id": "b28",
+   "authors": "Stanley J. Farlow",
+   "title": "Partial Differential Equations for Scientists and Engineers",
+   "edition": "",
+   "publisher": "Dover",
+   "year": 1993,
+   "url": ""
+  },
+  {
+   "id": "b29",
+   "authors": "David A. Cox, John Little and Donal O'Shea",
+   "title": "Ideals, Varieties, and Algorithms",
+   "edition": "4th ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics)",
+   "year": 2015,
+   "url": ""
+  },
+  {
+   "id": "b30",
+   "authors": "Miles Reid",
+   "title": "Undergraduate Algebraic Geometry",
+   "edition": "",
+   "publisher": "Cambridge University Press (LMS Student Texts 12)",
+   "year": 1988,
+   "url": ""
+  },
+  {
+   "id": "b31",
+   "authors": "Erwin Kreyszig",
+   "title": "Introductory Functional Analysis with Applications",
+   "edition": "",
+   "publisher": "Wiley",
+   "year": 1978,
+   "url": ""
+  },
+  {
+   "id": "b32",
+   "authors": "Peter D. Lax",
+   "title": "Functional Analysis",
+   "edition": "",
+   "publisher": "Wiley",
+   "year": 2002,
+   "url": ""
+  },
+  {
+   "id": "b33",
+   "authors": "Geoffrey Grimmett and David Stirzaker",
+   "title": "Probability and Random Processes",
+   "edition": "4th ed.",
+   "publisher": "Oxford University Press",
+   "year": 2020,
+   "url": ""
+  },
+  {
+   "id": "b34",
+   "authors": "Sheldon M. Ross",
+   "title": "Stochastic Processes",
+   "edition": "2nd ed.",
+   "publisher": "Wiley",
+   "year": 1996,
+   "url": ""
+  },
+  {
+   "id": "b35",
+   "authors": "Manfredo P. do Carmo",
+   "title": "Differential Geometry of Curves and Surfaces",
+   "edition": "2nd ed.",
+   "publisher": "Dover",
+   "year": 2016,
+   "url": ""
+  },
+  {
+   "id": "b36",
+   "authors": "Andrew Pressley",
+   "title": "Elementary Differential Geometry",
+   "edition": "2nd ed.",
+   "publisher": "Springer (Undergraduate Mathematics Series)",
+   "year": 2010,
+   "url": ""
+  },
+  {
+   "id": "b37",
+   "authors": "Czes Kosniowski",
+   "title": "A First Course in Algebraic Topology",
+   "edition": "",
+   "publisher": "Cambridge University Press",
+   "year": 1980,
+   "url": ""
+  },
+  {
+   "id": "b38",
+   "authors": "Allen Hatcher",
+   "title": "Algebraic Topology",
+   "edition": "",
+   "publisher": "Cambridge University Press (free on the author's website)",
+   "year": 2002,
+   "url": ""
+  },
+  {
+   "id": "b39",
+   "authors": "Stephen Boyd and Lieven Vandenberghe",
+   "title": "Convex Optimization",
+   "edition": "",
+   "publisher": "Cambridge University Press (free on the authors' website)",
+   "year": 2004,
+   "url": ""
+  },
+  {
+   "id": "b40",
+   "authors": "Mokhtar S. Bazaraa, John J. Jarvis and Hanif D. Sherali",
+   "title": "Linear Programming and Network Flows",
+   "edition": "4th ed.",
+   "publisher": "Wiley",
+   "year": 2010,
+   "url": ""
+  },
+  {
+   "id": "b41",
+   "authors": "Steven H. Strogatz",
+   "title": "Nonlinear Dynamics and Chaos",
+   "edition": "2nd ed.",
+   "publisher": "CRC Press",
+   "year": 2015,
+   "url": ""
+  },
+  {
+   "id": "b42",
+   "authors": "Morris W. Hirsch, Stephen Smale and Robert L. Devaney",
+   "title": "Differential Equations, Dynamical Systems, and an Introduction to Chaos",
+   "edition": "3rd ed.",
+   "publisher": "Academic Press",
+   "year": 2013,
+   "url": ""
+  },
+  {
+   "id": "b43",
+   "authors": "Jeffrey Hoffstein, Jill Pipher and Joseph H. Silverman",
+   "title": "An Introduction to Mathematical Cryptography",
+   "edition": "2nd ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics)",
+   "year": 2014,
+   "url": ""
+  },
+  {
+   "id": "b44",
+   "authors": "Christof Paar and Jan Pelzl",
+   "title": "Understanding Cryptography",
+   "edition": "",
+   "publisher": "Springer",
+   "year": 2010,
+   "url": ""
+  },
+  {
+   "id": "b45",
+   "authors": "David M. Burton",
+   "title": "Elementary Number Theory",
+   "edition": "7th ed.",
+   "publisher": "McGraw-Hill",
+   "year": 2011,
+   "url": ""
+  },
+  {
+   "id": "b46",
+   "authors": "Ivan Niven, Herbert S. Zuckerman and Hugh L. Montgomery",
+   "title": "An Introduction to the Theory of Numbers",
+   "edition": "5th ed.",
+   "publisher": "Wiley",
+   "year": 1991,
+   "url": ""
+  },
+  {
+   "id": "b47",
+   "authors": "Dennis D. Wackerly, William Mendenhall and Richard L. Scheaffer",
+   "title": "Mathematical Statistics with Applications",
+   "edition": "7th ed.",
+   "publisher": "Cengage",
+   "year": 2008,
+   "url": ""
+  },
+  {
+   "id": "b48",
+   "authors": "Robert V. Hogg, Joseph W. McKean and Allen T. Craig",
+   "title": "Introduction to Mathematical Statistics",
+   "edition": "8th ed.",
+   "publisher": "Pearson",
+   "year": 2019,
+   "url": ""
+  },
+  {
+   "id": "b49",
+   "authors": "David Halliday, Robert Resnick and Jearl Walker",
+   "title": "Fundamentals of Physics",
+   "edition": "10th ed.",
+   "publisher": "Wiley",
+   "year": 2013,
+   "url": ""
+  },
+  {
+   "id": "b50",
+   "authors": "Daniel Kleppner and Robert Kolenkow",
+   "title": "An Introduction to Mechanics",
+   "edition": "2nd ed.",
+   "publisher": "Cambridge University Press",
+   "year": 2014,
+   "url": ""
+  },
+  {
+   "id": "b51",
+   "authors": "Edward M. Purcell and David J. Morin",
+   "title": "Electricity and Magnetism",
+   "edition": "3rd ed.",
+   "publisher": "Cambridge University Press",
+   "year": 2013,
+   "url": ""
+  },
+  {
+   "id": "b52",
+   "authors": "Michael Sipser",
+   "title": "Introduction to the Theory of Computation",
+   "edition": "3rd ed.",
+   "publisher": "Cengage",
+   "year": 2012,
+   "url": ""
+  },
+  {
+   "id": "b53",
+   "authors": "John E. Hopcroft, Rajeev Motwani and Jeffrey D. Ullman",
+   "title": "Introduction to Automata Theory, Languages, and Computation",
+   "edition": "3rd ed.",
+   "publisher": "Pearson",
+   "year": 2006,
+   "url": ""
+  },
+  {
+   "id": "b54",
+   "authors": "Elias M. Stein and Rami Shakarchi",
+   "title": "Fourier Analysis: An Introduction (Princeton Lectures in Analysis I)",
+   "edition": "",
+   "publisher": "Princeton University Press",
+   "year": 2003,
+   "url": ""
+  },
+  {
+   "id": "b55",
+   "authors": "T. W. Körner",
+   "title": "Fourier Analysis",
+   "edition": "",
+   "publisher": "Cambridge University Press",
+   "year": 1988,
+   "url": ""
+  },
+  {
+   "id": "b56",
+   "authors": "James R. Munkres",
+   "title": "Analysis on Manifolds",
+   "edition": "",
+   "publisher": "Addison-Wesley",
+   "year": 1991,
+   "url": ""
+  },
+  {
+   "id": "b57",
+   "authors": "Michael Spivak",
+   "title": "Calculus on Manifolds",
+   "edition": "",
+   "publisher": "W. A. Benjamin",
+   "year": 1965,
+   "url": ""
+  },
+  {
+   "id": "b58",
+   "authors": "Richard P. Stanley",
+   "title": "Algebraic Combinatorics: Walks, Trees, Tableaux, and More",
+   "edition": "2nd ed.",
+   "publisher": "Springer (Undergraduate Texts in Mathematics)",
+   "year": 2018,
+   "url": ""
+  },
+  {
+   "id": "b59",
+   "authors": "Herbert B. Enderton",
+   "title": "A Mathematical Introduction to Logic",
+   "edition": "2nd ed.",
+   "publisher": "Academic Press",
+   "year": 2001,
+   "url": ""
+  },
+  {
+   "id": "b60",
+   "authors": "Herbert B. Enderton",
+   "title": "Elements of Set Theory",
+   "edition": "",
+   "publisher": "Academic Press",
+   "year": 1977,
+   "url": ""
+  },
+  {
+   "id": "b61",
+   "authors": "Gilbert Strang",
+   "title": "Computational Science and Engineering",
+   "edition": "",
+   "publisher": "Wellesley-Cambridge Press",
+   "year": 2007,
+   "url": ""
+  },
+  {
+   "id": "b62",
+   "authors": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein",
+   "title": "Introduction to Algorithms",
+   "edition": "4th ed.",
+   "publisher": "MIT Press",
+   "year": 2022,
+   "url": ""
+  },
+  {
+   "id": "b63",
+   "authors": "Jon Kleinberg and Éva Tardos",
+   "title": "Algorithm Design",
+   "edition": "",
+   "publisher": "Pearson",
+   "year": 2005,
+   "url": ""
+  },
+  {
+   "id": "b64",
+   "authors": "Jeff Erickson",
+   "title": "Algorithms",
+   "edition": "",
+   "publisher": "author's edition (free)",
+   "year": 2019,
+   "url": ""
+  },
+  {
+   "id": "b65",
+   "authors": "John V. Guttag",
+   "title": "Introduction to Computation and Programming Using Python",
+   "edition": "3rd ed.",
+   "publisher": "MIT Press",
+   "year": 2021,
+   "url": ""
+  },
+  {
+   "id": "b66",
+   "authors": "Allen B. Downey",
+   "title": "Think Python",
+   "edition": "2nd ed.",
+   "publisher": "O'Reilly (free online)",
+   "year": 2015,
+   "url": ""
+  },
+  {
+   "id": "b67",
+   "authors": "Gilbert Strang",
+   "title": "Linear Algebra and Learning from Data",
+   "edition": "",
+   "publisher": "Wellesley-Cambridge Press",
+   "year": 2019,
+   "url": ""
+  },
+  {
+   "id": "b68",
+   "authors": "A. P. French",
+   "title": "Vibrations and Waves",
+   "edition": "",
+   "publisher": "W. W. Norton (MIT Introductory Physics Series)",
+   "year": 1971,
+   "url": ""
+  },
+  {
+   "id": "b69",
+   "authors": "Howard Georgi",
+   "title": "The Physics of Waves",
+   "edition": "",
+   "publisher": "Prentice Hall (free on the author's website)",
+   "year": 1993,
+   "url": ""
+  },
+  {
+   "id": "b70",
+   "authors": "David J. Griffiths and Darrell F. Schroeter",
+   "title": "Introduction to Quantum Mechanics",
+   "edition": "3rd ed.",
+   "publisher": "Cambridge University Press",
+   "year": 2018,
+   "url": ""
+  },
+  {
+   "id": "b71",
+   "authors": "A. P. French and Edwin F. Taylor",
+   "title": "An Introduction to Quantum Physics",
+   "edition": "",
+   "publisher": "W. W. Norton (MIT Introductory Physics Series)",
+   "year": 1978,
+   "url": ""
+  },
+  {
+   "id": "b72",
+   "authors": "Marc Peter Deisenroth, A. Aldo Faisal and Cheng Soon Ong",
+   "title": "Mathematics for Machine Learning",
+   "edition": "",
+   "publisher": "Cambridge University Press (free online)",
+   "year": 2020,
+   "url": ""
+  },
+  {
+   "id": "b73",
+   "authors": "Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani",
+   "title": "An Introduction to Statistical Learning",
+   "edition": "2nd ed.",
+   "publisher": "Springer (free online)",
+   "year": 2021,
+   "url": ""
+  }
+ ],
+ "courses": [
+  {
+   "number": 1,
+   "code": "MATH 101",
+   "name": "Single Variable Calculus",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [],
+   "books": [
+    {
+     "book": "b1",
+     "role": "main",
+     "chapters": "1–11"
+    },
+    {
+     "book": "b2",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.01 Single Variable Calculus",
+    "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/"
+   }
+  },
+  {
+   "number": 2,
+   "code": "MATH 110",
+   "name": "Mathematics for Computer Science",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [],
+   "books": [
+    {
+     "book": "b5",
+     "role": "main",
+     "chapters": "Parts I–III"
+    },
+    {
+     "book": "b6",
+     "role": "supplementary",
+     "chapters": "1–6"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.062J / 6.042J Mathematics for Computer Science",
+    "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/"
+   }
+  },
+  {
+   "number": 3,
+   "code": "CS 101",
+   "name": "Introduction to Programming in Python",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [],
+   "books": [
+    {
+     "book": "b65",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b66",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 6.0001 Introduction to Computer Science and Programming in Python",
+    "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/"
+   }
+  },
+  {
+   "number": 4,
+   "code": "PHYS 101",
+   "name": "Classical Mechanics",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    1
+   ],
+   "books": [
+    {
+     "book": "b49",
+     "role": "main",
+     "chapters": "1–13, 15"
+    },
+    {
+     "book": "b50",
+     "role": "supplementary",
+     "chapters": "1–7"
+    }
+   ],
+   "reference": {
+    "name": "MIT 8.01SC Classical Mechanics",
+    "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/"
+   }
+  },
+  {
+   "number": 5,
+   "code": "MATH 102",
+   "name": "Multivariable Calculus",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    1
+   ],
+   "books": [
+    {
+     "book": "b1",
+     "role": "main",
+     "chapters": "12–16"
+    },
+    {
+     "book": "b2",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.02 Multivariable Calculus",
+    "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/"
+   }
+  },
+  {
+   "number": 6,
+   "code": "MATH 120",
+   "name": "Linear Algebra",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    1
+   ],
+   "books": [
+    {
+     "book": "b3",
+     "role": "main",
+     "chapters": "1–7"
+    },
+    {
+     "book": "b4",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.06 Linear Algebra",
+    "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/"
+   }
+  },
+  {
+   "number": 7,
+   "code": "PHYS 102",
+   "name": "Electricity and Magnetism",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    4,
+    5
+   ],
+   "books": [
+    {
+     "book": "b49",
+     "role": "main",
+     "chapters": "21–33"
+    },
+    {
+     "book": "b51",
+     "role": "supplementary",
+     "chapters": "1–9"
+    }
+   ],
+   "reference": {
+    "name": "MIT 8.02 Physics II: Electricity and Magnetism",
+    "url": "https://ocw.mit.edu/courses/8-02-physics-ii-electricity-and-magnetism-spring-2007/"
+   }
+  },
+  {
+   "number": 8,
+   "code": "MATH 130",
+   "name": "Differential Equations",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    1
+   ],
+   "books": [
+    {
+     "book": "b16",
+     "role": "main",
+     "chapters": "1–7, 9"
+    },
+    {
+     "book": "b17",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.03 Differential Equations",
+    "url": "https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/"
+   }
+  },
+  {
+   "number": 9,
+   "code": "CS 120",
+   "name": "Introduction to Algorithms",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2,
+    3
+   ],
+   "books": [
+    {
+     "book": "b62",
+     "role": "main",
+     "chapters": "1–4, 6–8, 10–14, 20, 22"
+    },
+    {
+     "book": "b64",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 6.006 Introduction to Algorithms",
+    "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/"
+   }
+  },
+  {
+   "number": 10,
+   "code": "MATH 140",
+   "name": "Probability and Statistics",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5
+   ],
+   "books": [
+    {
+     "book": "b12",
+     "role": "main",
+     "chapters": "1–9"
+    },
+    {
+     "book": "b11",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.05 Introduction to Probability and Statistics",
+    "url": "https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/"
+   }
+  },
+  {
+   "number": 11,
+   "code": "MATH 210",
+   "name": "Real Analysis",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5,
+    2
+   ],
+   "books": [
+    {
+     "book": "b9",
+     "role": "main",
+     "chapters": "1–7"
+    },
+    {
+     "book": "b10",
+     "role": "supplementary",
+     "chapters": "1–7"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.100 Real Analysis",
+    "url": "https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/"
+   }
+  },
+  {
+   "number": 12,
+   "code": "MATH 370",
+   "name": "Mathematical Logic and Set Theory",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2
+   ],
+   "books": [
+    {
+     "book": "b59",
+     "role": "main",
+     "chapters": "1–3"
+    },
+    {
+     "book": "b60",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.510 Introduction to Mathematical Logic and Set Theory",
+    "url": "https://math.mit.edu/academics/undergrad/subjects/185x.html"
+   }
+  },
+  {
+   "number": 13,
+   "code": "MATH 221",
+   "name": "Abstract Algebra I",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    6,
+    2
+   ],
+   "books": [
+    {
+     "book": "b7",
+     "role": "main",
+     "chapters": "Parts I–IV"
+    },
+    {
+     "book": "b8",
+     "role": "supplementary",
+     "chapters": "1–7"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.701 Algebra I",
+    "url": "https://ocw.mit.edu/courses/18-701-algebra-i-fall-2010/"
+   }
+  },
+  {
+   "number": 14,
+   "code": "CS 340",
+   "name": "Theory of Computation",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2
+   ],
+   "books": [
+    {
+     "book": "b52",
+     "role": "main",
+     "chapters": "0–5, 7"
+    },
+    {
+     "book": "b53",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.404J Theory of Computation",
+    "url": "https://ocw.mit.edu/courses/18-404j-theory-of-computation-fall-2020/"
+   }
+  },
+  {
+   "number": 15,
+   "code": "MATH 230",
+   "name": "Complex Variables",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5,
+    8
+   ],
+   "books": [
+    {
+     "book": "b18",
+     "role": "main",
+     "chapters": "1–6"
+    },
+    {
+     "book": "b19",
+     "role": "supplementary",
+     "chapters": "1–3"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.04 Complex Variables with Applications",
+    "url": "https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/"
+   }
+  },
+  {
+   "number": 16,
+   "code": "CS 350",
+   "name": "Cryptography",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    13
+   ],
+   "books": [
+    {
+     "book": "b43",
+     "role": "main",
+     "chapters": "1–4, 6, 7"
+    },
+    {
+     "book": "b44",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "Brown Math 158 Cryptography",
+    "url": "https://npflueger.people.amherst.edu/math158-2015"
+   }
+  },
+  {
+   "number": 17,
+   "code": "MATH 260",
+   "name": "Topology",
+   "kind": "obrig",
+   "roles": [
+    "obrig"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11
+   ],
+   "books": [
+    {
+     "book": "b20",
+     "role": "main",
+     "chapters": "1–4, 9"
+    },
+    {
+     "book": "b21",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.901 Introduction to Topology",
+    "url": "https://ocw.mit.edu/courses/18-901-introduction-to-topology-fall-2004/"
+   }
+  },
+  {
+   "number": 18,
+   "code": "MATH 220",
+   "name": "Theoretical Linear Algebra",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    6,
+    2
+   ],
+   "books": [
+    {
+     "book": "b13",
+     "role": "main",
+     "chapters": "1–9"
+    },
+    {
+     "book": "b3",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.700 Linear Algebra",
+    "url": "https://ocw.mit.edu/courses/18-700-linear-algebra-fall-2013/"
+   }
+  },
+  {
+   "number": 19,
+   "code": "MATH 222",
+   "name": "Abstract Algebra II",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    13,
+    18
+   ],
+   "books": [
+    {
+     "book": "b24",
+     "role": "main",
+     "chapters": "4, 7–10, 13, 14"
+    },
+    {
+     "book": "b8",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.702 Algebra II",
+    "url": "https://ocw.mit.edu/courses/18-702-algebra-ii-spring-2011/"
+   }
+  },
+  {
+   "number": 20,
+   "code": "MATH 250",
+   "name": "Number Theory",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2
+   ],
+   "books": [
+    {
+     "book": "b46",
+     "role": "main",
+     "chapters": "1–5"
+    },
+    {
+     "book": "b45",
+     "role": "supplementary",
+     "chapters": "1–9"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.781 Theory of Numbers",
+    "url": "https://ocw.mit.edu/courses/18-781-theory-of-numbers-spring-2012/"
+   }
+  },
+  {
+   "number": 21,
+   "code": "MATH 310",
+   "name": "Measure and Integration",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11
+   ],
+   "books": [
+    {
+     "book": "b25",
+     "role": "main",
+     "chapters": "1–5, 7"
+    },
+    {
+     "book": "b26",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.102 Introduction to Functional Analysis",
+    "url": "https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/"
+   }
+  },
+  {
+   "number": 22,
+   "code": "MATH 311",
+   "name": "Functional Analysis",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    21,
+    18
+   ],
+   "books": [
+    {
+     "book": "b31",
+     "role": "main",
+     "chapters": "2–4, 7, 9"
+    },
+    {
+     "book": "b32",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.102 Introduction to Functional Analysis",
+    "url": "https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/"
+   }
+  },
+  {
+   "number": 23,
+   "code": "MATH 312",
+   "name": "Fourier Analysis",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11
+   ],
+   "books": [
+    {
+     "book": "b54",
+     "role": "main",
+     "chapters": "1–6"
+    },
+    {
+     "book": "b55",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.103 Fourier Analysis",
+    "url": "https://ocw.mit.edu/courses/mathematics/18-103-fourier-analysis-fall-2013/index.htm"
+   }
+  },
+  {
+   "number": 24,
+   "code": "MATH 313",
+   "name": "Analysis on Manifolds",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11,
+    18
+   ],
+   "books": [
+    {
+     "book": "b56",
+     "role": "main",
+     "chapters": "1–8"
+    },
+    {
+     "book": "b57",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.101 Analysis and Manifolds (OCW: Analysis II)",
+    "url": "https://ocw.mit.edu/courses/18-101-analysis-ii-fall-2005/"
+   }
+  },
+  {
+   "number": 25,
+   "code": "MATH 321",
+   "name": "Algebraic Geometry",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    19
+   ],
+   "books": [
+    {
+     "book": "b29",
+     "role": "main",
+     "chapters": "1–5, 8"
+    },
+    {
+     "book": "b30",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "Notre Dame Math 40510 Introduction to Algebraic Geometry",
+    "url": "https://www3.nd.edu/~jmiglior/m40510S21.html"
+   }
+  },
+  {
+   "number": 26,
+   "code": "MATH 330",
+   "name": "Partial Differential Equations",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    8,
+    5
+   ],
+   "books": [
+    {
+     "book": "b27",
+     "role": "main",
+     "chapters": "1–6"
+    },
+    {
+     "book": "b28",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.303 Linear Partial Differential Equations",
+    "url": "https://ocw.mit.edu/courses/18-303-linear-partial-differential-equations-analysis-and-numerics-fall-2014/"
+   }
+  },
+  {
+   "number": 27,
+   "code": "MATH 331",
+   "name": "Dynamical Systems",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    8,
+    6
+   ],
+   "books": [
+    {
+     "book": "b41",
+     "role": "main",
+     "chapters": "2–10"
+    },
+    {
+     "book": "b42",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.353J Nonlinear Dynamics I: Chaos",
+    "url": "https://ocw.mit.edu/courses/18-353j-nonlinear-dynamics-i-chaos-fall-2012/"
+   }
+  },
+  {
+   "number": 28,
+   "code": "MATH 332",
+   "name": "Numerical Analysis",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    8,
+    6
+   ],
+   "books": [
+    {
+     "book": "b14",
+     "role": "main",
+     "chapters": "Parts 2, 3, 5, 6, 7"
+    },
+    {
+     "book": "b15",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.330 Introduction to Numerical Analysis",
+    "url": "https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/"
+   }
+  },
+  {
+   "number": 29,
+   "code": "MATH 333",
+   "name": "Computational Science and Engineering",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    8,
+    6
+   ],
+   "books": [
+    {
+     "book": "b61",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b15",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.085 Computational Science and Engineering I",
+    "url": "https://ocw.mit.edu/courses/18-085-computational-science-and-engineering-i-fall-2008/"
+   }
+  },
+  {
+   "number": 30,
+   "code": "MATH 340",
+   "name": "Probability and Random Variables",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5
+   ],
+   "books": [
+    {
+     "book": "b11",
+     "role": "main",
+     "chapters": "1–8"
+    },
+    {
+     "book": "b12",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.600 Probability and Random Variables",
+    "url": "https://ocw.mit.edu/courses/18-600-probability-and-random-variables-fall-2019/"
+   }
+  },
+  {
+   "number": 31,
+   "code": "MATH 341",
+   "name": "Mathematical Statistics",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    10
+   ],
+   "books": [
+    {
+     "book": "b47",
+     "role": "main",
+     "chapters": "7–11"
+    },
+    {
+     "book": "b48",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.650 Statistics for Applications",
+    "url": "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/"
+   }
+  },
+  {
+   "number": 32,
+   "code": "MATH 342",
+   "name": "Stochastic Processes",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    21,
+    30
+   ],
+   "books": [
+    {
+     "book": "b33",
+     "role": "main",
+     "chapters": "6–8, 12, 13"
+    },
+    {
+     "book": "b34",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.445 Introduction to Stochastic Processes",
+    "url": "https://ocw.mit.edu/courses/18-445-introduction-to-stochastic-processes-spring-2015/"
+   }
+  },
+  {
+   "number": 33,
+   "code": "MATH 350",
+   "name": "Combinatorics and Graph Theory",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2
+   ],
+   "books": [
+    {
+     "book": "b22",
+     "role": "main",
+     "chapters": "1–5"
+    },
+    {
+     "book": "b23",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.314 Combinatorial Analysis",
+    "url": "https://ocw.mit.edu/courses/18-314-combinatorial-analysis-fall-2014/"
+   }
+  },
+  {
+   "number": 34,
+   "code": "MATH 351",
+   "name": "Algebraic Combinatorics",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    33,
+    6
+   ],
+   "books": [
+    {
+     "book": "b58",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b23",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.212 Algebraic Combinatorics",
+    "url": "https://ocw.mit.edu/courses/18-212-algebraic-combinatorics-spring-2019/"
+   }
+  },
+  {
+   "number": 35,
+   "code": "MATH 360",
+   "name": "Differential Geometry",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11,
+    6
+   ],
+   "books": [
+    {
+     "book": "b35",
+     "role": "main",
+     "chapters": "1–4"
+    },
+    {
+     "book": "b36",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.950 Differential Geometry",
+    "url": "https://ocw.mit.edu/courses/18-950-differential-geometry-fall-2008/"
+   }
+  },
+  {
+   "number": 36,
+   "code": "MATH 361",
+   "name": "Algebraic Topology",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    17,
+    13
+   ],
+   "books": [
+    {
+     "book": "b37",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b38",
+     "role": "supplementary",
+     "chapters": "0–2"
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.904 / 18.905 Algebraic Topology",
+    "url": "https://ocw.mit.edu/courses/18-905-algebraic-topology-i-fall-2016/"
+   }
+  },
+  {
+   "number": 37,
+   "code": "MATH 410",
+   "name": "Topics in Analysis",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.104 Seminar in Analysis",
+    "url": "https://ocw.mit.edu/courses/18-104-seminar-in-analysis-applications-to-number-theory-fall-2006/"
+   }
+  },
+  {
+   "number": 38,
+   "code": "MATH 420",
+   "name": "Topics in Algebra",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    13
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.704 Seminar in Algebra",
+    "url": "https://ocw.mit.edu/search/?q=18.704"
+   }
+  },
+  {
+   "number": 39,
+   "code": "MATH 425",
+   "name": "Topics in Number Theory",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    13
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.784 Seminar in Number Theory",
+    "url": "https://ocw.mit.edu/search/?q=18.784"
+   }
+  },
+  {
+   "number": 40,
+   "code": "MATH 440",
+   "name": "Information Theory",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    10,
+    6
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.424 Seminar in Information Theory",
+    "url": "https://ocw.mit.edu/search/?q=18.424"
+   }
+  },
+  {
+   "number": 41,
+   "code": "MATH 450",
+   "name": "Topics in Discrete Mathematics",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    2,
+    6
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.204 Undergraduate Seminar in Discrete Mathematics",
+    "url": "https://math.mit.edu/~apost/courses/18.204_2018"
+   }
+  },
+  {
+   "number": 42,
+   "code": "MATH 460",
+   "name": "Topics in Topology",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    17
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.904 Seminar in Topology",
+    "url": "https://dspace.mit.edu/handle/1721.1/76253"
+   }
+  },
+  {
+   "number": 43,
+   "code": "MATH 465",
+   "name": "Topics in Geometry",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    6,
+    11
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.994 Seminar in Geometry",
+    "url": "https://ocw.mit.edu/search/?q=18.994"
+   }
+  },
+  {
+   "number": 44,
+   "code": "MATH 470",
+   "name": "Topics in Logic",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11,
+    6
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.504 Seminar in Logic",
+    "url": "https://math.mit.edu/academics/undergrad/subjects/185x.html"
+   }
+  },
+  {
+   "number": 45,
+   "code": "MATH 480",
+   "name": "Topics in Theoretical Computer Science",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    47
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.434 Seminar in Theoretical Computer Science",
+    "url": "https://ocw.mit.edu/search/?q=18.434"
+   }
+  },
+  {
+   "number": 46,
+   "code": "MATH 490",
+   "name": "Project Laboratory in Mathematics",
+   "kind": "elet",
+   "roles": [
+    "elet",
+    "sem"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    11,
+    13
+   ],
+   "books": [],
+   "reference": {
+    "name": "MIT 18.821 Project Laboratory in Mathematics",
+    "url": "https://ocw.mit.edu/courses/18-821-project-laboratory-in-mathematics-spring-2013/"
+   }
+  },
+  {
+   "number": 47,
+   "code": "CS 320",
+   "name": "Design and Analysis of Algorithms",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    9
+   ],
+   "books": [
+    {
+     "book": "b62",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b63",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.410J / 6.046J Design and Analysis of Algorithms",
+    "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/"
+   }
+  },
+  {
+   "number": 48,
+   "code": "CS 360",
+   "name": "Matrix Methods in Data Analysis and Machine Learning",
+   "kind": "elet",
+   "roles": [
+    "elet"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    6
+   ],
+   "books": [
+    {
+     "book": "b67",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b3",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning",
+    "url": "https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/"
+   }
+  },
+  {
+   "number": 49,
+   "code": "MATH 334",
+   "name": "Optimization",
+   "kind": "opt",
+   "roles": [
+    "opt"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5,
+    6
+   ],
+   "books": [
+    {
+     "book": "b39",
+     "role": "main",
+     "chapters": "1–5, 9"
+    },
+    {
+     "book": "b40",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 6.079 Introduction to Convex Optimization",
+    "url": "https://ocw.mit.edu/courses/6-079-introduction-to-convex-optimization-fall-2009/"
+   }
+  },
+  {
+   "number": 50,
+   "code": "CS 370",
+   "name": "Introduction to Machine Learning",
+   "kind": "opt",
+   "roles": [
+    "opt"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5,
+    6,
+    3
+   ],
+   "books": [
+    {
+     "book": "b72",
+     "role": "main",
+     "chapters": "8–12"
+    },
+    {
+     "book": "b73",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 6.036 Introduction to Machine Learning",
+    "url": "https://ocw.mit.edu/courses/6-036-introduction-to-machine-learning-fall-2020/"
+   }
+  },
+  {
+   "number": 51,
+   "code": "PHYS 201",
+   "name": "Vibrations and Waves",
+   "kind": "opt",
+   "roles": [
+    "opt"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    5,
+    7
+   ],
+   "books": [
+    {
+     "book": "b68",
+     "role": "main",
+     "chapters": ""
+    },
+    {
+     "book": "b69",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 8.03SC Physics III: Vibrations and Waves",
+    "url": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/"
+   }
+  },
+  {
+   "number": 52,
+   "code": "PHYS 202",
+   "name": "Quantum Physics I",
+   "kind": "opt",
+   "roles": [
+    "opt"
+   ],
+   "hours": 170,
+   "prerequisites": [
+    51,
+    8
+   ],
+   "books": [
+    {
+     "book": "b70",
+     "role": "main",
+     "chapters": "1–4"
+    },
+    {
+     "book": "b71",
+     "role": "supplementary",
+     "chapters": ""
+    }
+   ],
+   "reference": {
+    "name": "MIT 8.04 Quantum Physics I",
+    "url": "https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/"
+   }
+  }
+ ]
+}

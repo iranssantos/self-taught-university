@@ -1,0 +1,13 @@
+{
+ "programs": [
+  {
+   "file": "bs-mathematics.json",
+   "title": "Bachelor of Science in Mathematics",
+   "description": "A mathematics major in the structure of MIT Course 18: 17 fixed courses in mathematics, physics, and computing, 11 electives, 4 free electives, and 2 seminars.",
+   "courses": 32,
+   "hours": 5440,
+   "basedOn": "MIT Course 18 (Mathematics)",
+   "handbook": "docs/handbook.pdf"
+  }
+ ]
+}
