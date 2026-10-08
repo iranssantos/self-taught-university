@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Self-Taught University</title>
+<meta name="theme-color" content="#1C2230">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Self-Taught University">
+<meta name="description" content="Follow a self-directed university program: courses, terms, assignments, and a transcript, all on your device.">
+<script>try{var t=localStorage.getItem("stu-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<style>
+:root{
+  --paper:#F5F6F8; --surface:#FFFFFF; --ink:#1C2230; --muted:#5D6677; --line:#DCE0E7; --focus:#3F51B5;
+  --st-planned:#616161; --st-active:#3F51B5; --st-done:#0B8043;
+  --al-warn:#F6BF26; --al-soon:#FB8C00; --al-late:#D50000;
+  --serif:Georgia, "Noto Serif", "Times New Roman", serif;
+  --sans:system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --r:10px; --nav-h:64px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12151C; --surface:#1A1F29; --ink:#E7EAF0; --muted:#9AA3B2; --line:#2A3140; --focus:#8C9EFF;
+    --st-planned:#8A8F98; --st-active:#7986CB; --st-done:#33A36B;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12151C; --surface:#1A1F29; --ink:#E7EAF0; --muted:#9AA3B2; --line:#2A3140; --focus:#8C9EFF;
+  --st-planned:#8A8F98; --st-active:#7986CB; --st-done:#33A36B;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2;margin:0}
+h1{font-size:1.35rem} h2{font-size:1.5rem;margin-bottom:.75rem} h3{font-size:1.1rem}
+p{margin:.4rem 0}
+a{color:var(--focus)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.small{font-size:.875rem} .muted{color:var(--muted)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.top .in{max-width:980px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.save{font-size:.8rem;color:var(--muted);white-space:nowrap;background:none;border:0;padding:.4rem;min-width:32px;min-height:32px;cursor:pointer}
+.save .dirty{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--al-soon)}
+.save b{color:var(--st-done);font-weight:700}
+main{max-width:980px;margin:0 auto;padding:1rem 1rem calc(var(--nav-h) + 2rem + env(safe-area-inset-bottom,0px))}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.bottom .in{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.bottom button{background:none;border:0;padding:.55rem .1rem;min-height:var(--nav-h);font-size:.72rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:.2rem;cursor:pointer}
+nav.bottom button svg{width:22px;height:22px}
+nav.bottom button[aria-current="page"]{color:var(--ink);font-weight:700}
+nav.bottom button[aria-current="page"] svg{color:var(--st-active)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem;margin-bottom:1rem}
+.row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:.5rem .85rem;cursor:pointer;min-height:40px}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600}
+.btn.danger{color:var(--al-late);border-color:color-mix(in srgb,var(--al-late) 45%,var(--line))}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sm{min-height:32px;padding:.25rem .6rem;font-size:.85rem}
+label.f{display:flex;flex-direction:column;gap:.25rem;font-size:.85rem;color:var(--muted)}
+label.f input,label.f select,label.f textarea{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:.5rem .6rem;color:var(--ink);font-size:1rem;min-height:40px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem}
+/* mosaic */
+.mosaic{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:.75rem 0 .25rem}
+.tile{aspect-ratio:1;min-width:0;overflow:hidden;border-radius:6px;display:flex;align-items:center;justify-content:center;font:700 .85rem/1 var(--sans);color:#fff;border:0;cursor:pointer;position:relative}
+.tile[data-st="planned"]{background:transparent;color:var(--st-planned);box-shadow:inset 0 0 0 2px var(--st-planned)}
+.tile[data-st="active"]{background:var(--st-active)}
+.tile[data-st="done"]{background:var(--st-done)}
+.tile[data-al]::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;border:2px solid var(--surface)}
+.tile[data-al="warn"]::after{background:var(--al-warn)} .tile[data-al="soon"]::after{background:var(--al-soon)} .tile[data-al="late"]::after{background:var(--al-late)}
+.legend{display:flex;flex-wrap:wrap;gap:.35rem 1rem;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+/* status & alert chips */
+.chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;padding:.12rem .5rem;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.chip.planned{color:var(--st-planned)} .chip.active{color:var(--st-active)} .chip.done{color:var(--st-done)}
+.alert{display:flex;gap:.5rem;align-items:flex-start;font-size:.88rem;padding:.35rem 0}
+.alert .dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:.4rem}
+.dot.warn{background:var(--al-warn)} .dot.soon{background:var(--al-soon)} .dot.late{background:var(--al-late)} .dot.ok{background:var(--st-done)}
+.alert .lv{font-weight:700;min-width:5.5rem}
+/* course card */
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--st-planned);border-radius:8px;padding:.6rem .7rem;margin-bottom:.5rem}
+.card .ct{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
+.lrow{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.lp{font-size:.75rem;line-height:1.2;padding:.25rem .45rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;min-height:30px;color:var(--ink)}
+.lp[data-s="ok"]{background:var(--st-done);border-color:var(--st-done);color:#fff}
+.lp[data-s="soon"]{border:2px solid var(--al-soon)}
+.lp[data-s="late"]{border:2px solid var(--al-late);color:var(--al-late);font-weight:700}
+.lp[data-s="none"]{color:var(--muted);border-style:dashed}
+.filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.25rem 0 1rem}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.guide h3{margin:1.1rem 0 .3rem}
+.guide p,.guide li{max-width:68ch}
+.guide ul{padding-left:1.2rem;margin:.3rem 0}
+.card[data-st="active"]{border-left-color:var(--st-active)} .card[data-st="done"]{border-left-color:var(--st-done)}
+.card[data-al="warn"]{box-shadow:0 0 0 2px var(--al-warn)} .card[data-al="soon"]{box-shadow:0 0 0 2px var(--al-soon)} .card[data-al="late"]{box-shadow:0 0 0 2px var(--al-late)}
+.card .n{font:600 .74rem/1 var(--sans);letter-spacing:.03em;color:var(--muted);margin-right:.45rem;white-space:nowrap}
+.tile small{position:absolute;top:3px;left:4px;font-size:.55rem;font-weight:600;opacity:.75}
+.card .meta{font-size:.8rem;color:var(--muted);margin-top:.15rem}
+.sem{border-top:1px solid var(--line);padding:.8rem 0}
+.sem:first-child{border-top:0;padding-top:0}
+/* tables */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.45rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.8rem}
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .h{font-size:.75rem;color:var(--muted);text-align:center;padding:.2rem 0}
+.cal button{min-height:56px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.25rem;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;font-size:.8rem}
+.cal button.out{opacity:.35}
+.cal button.today{outline:2px solid var(--ink);outline-offset:-2px}
+.cal button.sel{background:color-mix(in srgb,var(--st-active) 12%,var(--surface))}
+.cal .dots{display:flex;flex-wrap:wrap;gap:3px}
+.cal .dots span{width:8px;height:8px;border-radius:50%}
+.cal .dots span.note{width:12px;height:3px;border-radius:2px;margin-top:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:.4rem .8rem;cursor:pointer;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.item{display:flex;gap:.6rem;align-items:flex-start;justify-content:space-between;border-top:1px solid var(--line);padding:.5rem 0}
+.item:first-child{border-top:0}
+.item .acts{display:flex;gap:.3rem;flex:0 0 auto}
+/* dialog */
+dialog{border:0;border-radius:14px;padding:0;width:min(680px,96vw);max-height:90vh;background:var(--surface);color:var(--ink)}
+#ask,#askl{width:min(420px,92vw)}
+dialog::backdrop{background:rgb(0 0 0 / .45)}
+dialog .dh{position:sticky;top:0;background:var(--surface);padding:1rem 1rem .6rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;z-index:1}
+dialog .db{padding:1rem}
+details summary{cursor:pointer;font-weight:600;padding:.3rem 0}
+.prq{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.2rem .8rem;max-height:260px;overflow:auto;padding:.4rem 0}
+.prq label{font-size:.88rem;display:flex;gap:.4rem;align-items:center}
+.list-row{display:grid;grid-template-columns:1fr;gap:.4rem;border:1px solid var(--line);border-radius:8px;padding:.6rem;margin-bottom:.5rem}
+.list-row[data-ok="1"]{border-color:color-mix(in srgb,var(--st-done) 60%,var(--line))}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 1rem + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:.6rem 1rem;border-radius:8px;font-size:.9rem;z-index:20;max-width:90vw}
+.empty{color:var(--muted);font-size:.9rem;padding:.5rem 0}
+.big{font:700 2rem/1 var(--serif)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem}
+.stats div{border-left:3px solid var(--line);padding-left:.6rem}
+@media (max-width:640px){
+  nav.bottom button{font-size:.7rem}
+  h2{font-size:1.3rem}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+.prog{font-size:.85rem;color:var(--muted);margin-top:.1rem}
+.prog select{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.15rem .4rem;font-size:.85rem;max-width:60vw}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.sec{margin-top:.8rem;border-top:1px solid var(--line);padding-top:.5rem}
+.sec.panel{border-top:1px solid var(--line);padding:0 1rem;margin:0 0 .8rem}
+.sec summary{font-family:var(--serif);font-weight:600;font-size:1.05rem;padding:.55rem 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+.sec summary::-webkit-details-marker{display:none}
+.sec summary::after{content:"▾";color:var(--muted);font-family:var(--sans)}
+.sec[open] summary::after{content:"▴"}
+.sec.panel[open]{padding-bottom:1rem}
+.secb{padding:.2rem 0}
+.line{padding:.35rem 0;border-bottom:1px solid var(--line)}
+.line:last-child{border-bottom:0}
+.lnk{display:flex;gap:.5rem;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;color:var(--ink);font-size:.92rem}
+.lnk .dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%}
+.hin{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:.5rem .6rem;min-height:40px;max-width:9rem;color:var(--ink);font-size:1rem}
+.bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin-top:.4rem}
+.bar span{display:block;height:100%;background:var(--st-done)}
+.wchart{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:6px;height:110px;margin-top:.8rem;align-items:end}
+.wcol{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.wcol span{width:70%;background:var(--st-active);border-radius:3px 3px 0 0;min-height:2px}
+.wcol small{font-size:.65rem;color:var(--muted);height:1.1rem;line-height:1.1rem}
+.wneed{position:absolute;left:0;right:0;border-top:2px dashed var(--al-soon)}
+.ktag{font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 .4rem;margin-left:.3rem;vertical-align:1px;white-space:nowrap}
+.xinfo{margin-top:.5rem}
+.refrow{border-bottom:1px solid var(--line);padding:.5rem 0}
+.card .ct{font-size:.95rem}
+#save{font-size:1rem}
+h4{font-family:var(--serif);font-weight:600;font-size:1rem;margin:0}
+.xrefs{margin-top:.5rem;display:grid;gap:.3rem}
+.xref{display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.85rem;color:var(--muted)}
+.cite{font-size:.9rem;margin:.3rem 0 .5rem;line-height:1.45}
+.semctl{margin:.4rem 0 .6rem;align-items:flex-end}
+a.btn{text-decoration:none;display:inline-flex;align-items:center;color:var(--ink)}
+details.more{margin-top:.5rem}details.more>summary{cursor:pointer;font-size:.85rem;color:var(--muted);list-style:none}details.more>summary::-webkit-details-marker{display:none}details.more>summary::before{content:"▸ ";}details.more[open]>summary::before{content:"▾ ";}details.more[open]>summary{margin-bottom:.4rem}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><div><h1>Self-Taught University</h1><div id="prog" class="prog"></div></div><div class="row" style="flex-wrap:nowrap"><button class="save" id="save" data-act="backup" aria-live="polite"></button><button class="btn sm" data-act="guide">Guide</button></div></div></header>
+<main id="view" tabindex="-1"></main>
+<nav class="bottom" aria-label="Sections"><div class="in" id="nav"></div></nav>
+<dialog id="dlg"></dialog>
+<dialog id="askl" aria-labelledby="asklT"><div class="db"><p id="asklT" style="margin:0 0 .6rem;font-weight:600"></p><p id="asklH" class="small muted" hidden style="margin:.3rem 0 .5rem"></p><input id="asklIn" class="hin" type="url" placeholder="https://" style="max-width:100%;width:100%"><div class="row" style="justify-content:flex-end;margin-top:.8rem"><button class="btn" data-askl="">Cancel</button><button class="btn primary" data-askl="ok">Save</button></div></div></dialog>
+<dialog id="ask" aria-labelledby="askMsg"><div class="db"><p id="askMsg" style="margin:0 0 1rem"></p><div class="row" style="justify-content:flex-end"><button class="btn" data-ask="0">Cancel</button><button class="btn primary" id="askOk" data-ask="1">OK</button></div></div></dialog>
+<input type="file" id="fileIn" accept="application/pdf" hidden>
+<input type="file" id="courseIn" accept=".json,.csv,application/json,text/csv" hidden>
+<input type="file" id="restoreIn" accept=".zip,.json,application/zip,application/json" hidden>
+
+<script>
+"use strict";
+/* ---------- Constants ---------- */
+const STATUS = { planned:{label:"Planned"}, active:{label:"In progress"}, done:{label:"Completed"} };
+const ST_ORDER = ["planned","active","done"];
+const LV = {late:{label:"Overdue",rank:3}, soon:{label:"Due soon",rank:2}, warn:{label:"Needs attention",rank:1}};
+const LIST_DEF = [
+  {key:"b1", label:"Problem Set 1", q:25, week:4},
+  {key:"b2", label:"Problem Set 2", q:25, week:8},
+  {key:"b3", label:"Problem Set 3", q:25, week:12},
+  {key:"b4", label:"Problem Set 4", q:25, week:15},
+  {key:"rev",label:"Cumulative Review", q:10, week:16}
+];
+const ORIGINS = ["Own","AI (checked)","Adapted from a book"];
+const ROLE = {principal:"Primary", complementar:"Supplementary"};
+
+const KIND = {obrig:"Fixed", sem:"Seminar", elet:"Elective", opt:"Free elective"};
+const KIND_PL = {obrig:"Fixed courses", sem:"Seminars", elet:"Electives", opt:"Free electives"};
+/* a course taken as a seminar still counts in its own block (elective or free elective).
+   Any course outside the fixed ones can count as a free elective; only electives can count as electives. */
+const canElet = c => (c.roles||[c.kind]).includes("elet");
+const canSem  = c => (c.roles||[]).includes("sem");
+const bucket = c => c.kind==="sem" ? (c.base||"elet") : c.kind;
+const DEFAULT_HOURS=170;
+/* minimum structure of every program: the standard of an MIT undergraduate degree (Course 18) */
+const STANDARD={hours:170, core:17, electives:11, courses:32, seminars:2};
+function structureProblems(st){
+  const cs=Object.values(st.courses||{}); const p=[];
+  const core=cs.filter(c=>c.kind==="obrig").length;
+  const canElet=cs.filter(c=>c.kind!=="obrig" && (c.kind==="elet"||(c.roles||[]).includes("elet")||(c.kind==="sem"&&(c.base||"elet")==="elet"))).length;
+  const semCap=cs.filter(c=>c.kind==="sem"||(c.roles||[]).includes("sem")).length;
+  const set=st.settings||{};
+  if(core<STANDARD.core) p.push(`It has ${core} fixed courses; at least ${STANDARD.core} are needed.`);
+  if(canElet<STANDARD.electives) p.push(`Its catalog has ${canElet} electives; at least ${STANDARD.electives} are needed.`);
+  if(cs.length-core<STANDARD.courses-STANDARD.core) p.push(`Its catalog has ${cs.length-core} courses beyond the fixed ones; at least ${STANDARD.courses-STANDARD.core} are needed.`);
+  if(semCap<STANDARD.seminars) p.push(`It has ${semCap} courses that can be taken as a seminar; at least ${STANDARD.seminars} are needed.`);
+  if(num(set.minTotal,0)<STANDARD.courses) p.push(`It requires ${num(set.minTotal,0)} courses to complete; at least ${STANDARD.courses} are needed.`);
+  if(num(set.minElet,0)<STANDARD.electives) p.push(`It requires ${num(set.minElet,0)} electives; at least ${STANDARD.electives} are needed.`);
+  if(num(set.minSem,0)<STANDARD.seminars) p.push(`It requires ${num(set.minSem,0)} seminars; at least ${STANDARD.seminars} are needed.`);
+  const low=cs.filter(c=>num(c.hours,0)<STANDARD.hours); if(low.length) p.push(`${low.length} course(s) carry fewer than ${STANDARD.hours} hours (${low.slice(0,4).map(c=>c.code||c.name).join(", ")}${low.length>4?"…":""}).`);
+  const bad=cs.filter(c=>!String(c.code||"").trim()||!String(c.name||"").trim()); if(bad.length) p.push(`${bad.length} course(s) have no code or no name.`);
+  const nobook=cs.filter(c=>c.kind!=="sem" && !(c.roles||[]).includes("sem") && !(c.refs||[]).some(r=>r.role==="principal")); if(nobook.length) p.push(`${nobook.length} course(s) have no primary textbook (${nobook.slice(0,4).map(c=>c.code||c.name).join(", ")}${nobook.length>4?"…":""}).`);
+  return p;
+}
+
+/* ---------- Utilities ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-"+Date.now().toString(36)+Math.random().toString(36).slice(2));
+const pad = n => String(n).padStart(2,"0");
+const iso = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const today = () => iso(new Date());
+const addDays = (s,n) => { const d=parse(s); d.setDate(d.getDate()+n); return iso(d); };
+const daysUntil = s => Math.round((parse(s)-parse(today()))/864e5);
+const fmt = s => s ? parse(s).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "no date";
+const fmtShort = s => s ? parse(s).toLocaleDateString("en-US",{month:"short",day:"numeric"}) : "";
+const dm = x => { const [,m,d]=x.split("-"); return `${+m}/${+d}`; };
+const nextMonday = () => { const d=new Date(); const k=(8-d.getDay())%7||7; d.setDate(d.getDate()+k); return iso(d); };
+const weekStart = s => { const d=parse(s); d.setDate(d.getDate()-d.getDay()); return iso(d); };
+const num = (v,def) => { const n=Number(v); return Number.isFinite(n) ? n : def; };
+const slug = t => String(t).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
+const reduced = () => { try{ return matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){ return false; } };
+
+function askLink(title,val,hint=""){
+  return new Promise(res=>{
+    const d=$("#askl"); $("#asklT").textContent=title; const h=$("#asklH"); if(h){ h.textContent=hint; h.hidden=!hint; } const inp=$("#asklIn"); inp.value=val||"";
+    d.returnValue=""; d.onclose=()=>{ if(d.returnValue!=="ok") return res(null); const v=inp.value.trim();
+      if(v && !/^https?:\/\//.test(v)){ toast("The link must start with https://"); return res(null); } res(v); };
+    d.showModal(); setTimeout(()=>inp.focus(),50);
+  });
+}
+function toast(msg){
+  const t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(), 2600);
+}
+function ask(msg, okLabel="OK", danger=false){
+  return new Promise(res=>{
+    const d=$("#ask"); $("#askMsg").textContent=msg;
+    const ok=$("#askOk"); ok.textContent=okLabel; ok.className="btn "+(danger?"danger":"primary");
+    d.returnValue="0"; d.onclose=()=>res(d.returnValue==="1"); d.showModal();
+  });
+}
+
+/* ---------- IndexedDB ---------- */
+let DB;
+function openDB(){
+  return new Promise((res,rej)=>{
+    const r=indexedDB.open("stu-app",1);
+    r.onupgradeneeded=()=>{ const db=r.result;
+      db.createObjectStore("kv"); db.createObjectStore("events",{keyPath:"n",autoIncrement:true}); db.createObjectStore("files",{keyPath:"id"}); };
+    r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);
+  });
+}
+function tx(store,mode,fn){
+  return new Promise((res,rej)=>{
+    const t=DB.transaction(store,mode); const s=t.objectStore(store); let out;
+    Promise.resolve(fn(s)).then(v=>{out=v;});
+    t.oncomplete=()=>res(out); t.onerror=()=>rej(t.error); t.onabort=()=>rej(t.error);
+  });
+}
+const reqP = r => new Promise((res,rej)=>{ r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+const dbGet = (store,key) => tx(store,"readonly",s=>reqP(s.get(key)));
+const dbPut = (store,val,key) => tx(store,"readwrite",s=>{ key===undefined ? s.put(val) : s.put(val,key); });
+const dbAll = store => tx(store,"readonly",s=>reqP(s.getAll()));
+const dbClear = store => tx(store,"readwrite",s=>{ s.clear(); });
+const dbDel = (store,key) => tx(store,"readwrite",s=>{ s.delete(key); });
+
+/* ---------- State: pure functions ---------- */
+/* seminar: recorded presentation and a paper of about 10 pages, as in MIT seminars; otherwise the 5 problem sets */
+const SEM_DEF=[{key:"video",label:"Presentation video",week:14},{key:"artigo",label:"Paper (about 10 pages)",week:16}];
+function listsFor(kind){
+  if(kind==="sem") return SEM_DEF.map(l=>({key:l.key,label:l.label,questions:0,origin:"",link:"",deliveredAt:""}));
+  return LIST_DEF.map(l=>({key:l.key,label:l.label,questions:l.q,origin:ORIGINS[0],link:"",deliveredAt:""}));
+}
+const defaultLists=()=>listsFor("obrig");
+/* ---------- Program calendar (always computed) ---------- */
+const addMonths=(s,n)=>{ const d=parse(s); const day=d.getDate(); d.setDate(1); d.setMonth(d.getMonth()+n); const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(); d.setDate(Math.min(day,last)); return iso(d); };
+const daysBetween=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
+const satOnOrBefore=s=>{ const d=parse(s); d.setDate(d.getDate()-((d.getDay()+1)%7)); return iso(d); };
+function courseWindow(st,c,semStart){
+  /* planned: starts at the start of its term or today, whichever is later */
+  const start=(c.status!=="planned" && c.startedAt) ? c.startedAt : (semStart && semStart<today() ? today() : semStart); if(!start) return null;
+  const nomEnd=addDays(addMonths(start,st.settings.semMonths||4),-1);
+  return {start, nomEnd, end: c.status==="done" && c.doneAt ? c.doneAt : nomEnd};
+}
+function duesFor(w,c){
+  if(!w) return {}; const days=daysBetween(w.start,w.nomEnd)+1; const o={};
+  for(const l of (c?.lists||LIST_DEF)){ const wk=[...LIST_DEF,...SEM_DEF].find(d=>d.key===l.key)?.week||16;
+    let due=satOnOrBefore(addDays(w.start, Math.round(days*wk/16)-1)); if(due<w.start) due=w.start; o[l.key]=due; }
+  return o;
+}
+/* Each term starts when the previous one ends; a term ends when its courses end. */
+function computeSchedule(st){
+  const per=st.settings.perYear||3, months=st.settings.semMonths||4; const sems=[], course={}; let cursor=st.settings.courseStart;
+  const byS={}; for(const c of Object.values(st.courses)) if(c.semesterId) (byS[c.semesterId]=byS[c.semesterId]||[]).push(c);
+  (st.sems||[]).forEach((x,i)=>{
+    let start=cursor; let end=addDays(addMonths(start,months),-1); const list=byS[x.id]||[];
+    if(list.length){ end="";
+      for(const c of list){ const w=courseWindow(st,c,cursor); course[c.id]={...w,dues:duesFor(w,c)}; if(!end||w.end>end) end=w.end; if(w.start<start) start=w.start; } }
+    sems.push({id:x.id, idx:i, num:i+1, year:Math.floor(i/per)+1, k:i%per+1, start, end, name:`Term ${i+1}`});
+    cursor=addDays(end,1);
+  });
+  for(const c of Object.values(st.courses)) if(!course[c.id]){
+    const w=c.status!=="planned"&&c.startedAt?courseWindow(st,c,null):null;
+    course[c.id]=w?{...w,dues:duesFor(w,c)}:{start:"",end:"",dues:{}};
+  }
+  return {sems, course};
+}
+let _SCH=null, _SCHS=null;
+function sched(){ if(_SCHS!==S){ _SCH=computeSchedule(S); _SCHS=S; } return _SCH; }
+const dueOf=(c,l)=>sched().course[c.id]?.dues[l.key]||"";
+
+function planOrder(list){
+  const ids=new Set(list.map(c=>c.id)); const order=[]; const placed=new Set(); const rest=[...list];
+  /* courses that other planned courses depend on go first (longest chain first), so no term is wasted at the end */
+  const depth={}; const dep=id=>{ if(depth[id]!==undefined) return depth[id]; depth[id]=0;
+    let d=0; for(const c of list) if(c.prereq.includes(id)) d=Math.max(d,1+dep(c.id)); return depth[id]=d; };
+  for(const c of list) dep(c.id);
+  while(rest.length){
+    rest.sort((a,b)=>(depth[b.id]-depth[a.id])||(a.num-b.num));
+    let i=rest.findIndex(c=>c.prereq.every(p=>!ids.has(p)||placed.has(p)));
+    if(i<0) i=0;
+    const c=rest.splice(i,1)[0]; order.push(c); placed.add(c.id);
+  }
+  return order;
+}
+/* places courses in terms, never in the same term as (or before) a prerequisite */
+function pack(st, toPlace, start){
+  const per=Math.max(1,st.settings.perSemester); const sems=[...(st.sems||[])]; const cs=Object.values(st.courses);
+  const moving=new Set(toPlace.map(c=>c.id)); const idx={}; const count={};
+  sems.forEach((x,i)=>{ idx[x.id]=i; });
+  /* after the first year, each term keeps one slot for a course the student chooses, as electives start in the second year at MIT */
+  const firstYear=Math.max(1,num(st.settings.perYear,3)); const fixedCap=i=> i<firstYear ? per : Math.max(1,per-1); const countFix={};
+  const pos={}; for(const c of cs) if(!moving.has(c.id)){ if(c.status==="done") pos[c.id]=-1; else if(c.semesterId && idx[c.semesterId]!==undefined){ pos[c.id]=idx[c.semesterId]; count[c.semesterId]=(count[c.semesterId]||0)+1; if(c.kind==="obrig") countFix[c.semesterId]=(countFix[c.semesterId]||0)+1; } }
+  const rest=planOrder(toPlace); const assign={}, add=[]; let i=Math.max(0,start);
+  const ok=(c,i)=>c.prereq.every(p=>!st.courses[p] || (pos[p]!==undefined && pos[p]<i) || (!moving.has(p) && pos[p]===undefined));
+  let guard=0;
+  while(rest.length && guard<1000){ guard++;
+    if(i>=sems.length){ const ns={id:uid()}; sems.push(ns); add.push(ns); idx[ns.id]=i; }
+    const sid=sems[i].id; let free=per-(count[sid]||0); let placedHere=0;
+    for(let k=0;k<rest.length && free>0;){
+      if(ok(rest[k],i) && (rest[k].kind!=="obrig" || (countFix[sid]||0)<fixedCap(i))){ const c=rest.splice(k,1)[0]; assign[c.id]=sid; pos[c.id]=i; count[sid]=(count[sid]||0)+1; if(c.kind==="obrig") countFix[sid]=(countFix[sid]||0)+1; free--; placedHere++; } else k++;
+    }
+    if(!placedHere && free===per-(count[sid]||0) && rest.length && sems.slice(i+1).length===0 && add.length>rest.length+sems.length){ const c=rest.shift(); assign[c.id]=sid; pos[c.id]=i; }
+    i++;
+  }
+  return {assign, add, sems};
+}
+/* places courses without a term in open slots, adding terms at the end if needed */
+function fillPlan(st){
+  const list=Object.values(st.courses).filter(c=>c.chosen!==false && !c.semesterId && c.status!=="done");
+  const {assign,add}=pack(st, list, 0); return {assign, add};
+}
+/* rearranges planned courses in catalog order, keeping the standard per term */
+function reflow(st){
+  const cs=Object.values(st.courses); const sems=st.sems||[];
+  let start=sems.findIndex(x=>cs.some(c=>c.semesterId===x.id && c.status!=="done"));
+  if(start<0) start=sems.findIndex(x=>!cs.some(c=>c.semesterId===x.id)); if(start<0) start=sems.length;
+  const {assign,add,sems:all}=pack(st, cs.filter(c=>c.status==="planned" && c.chosen!==false), start);
+  const used=new Set([...cs.filter(c=>c.status!=="planned"&&c.semesterId).map(c=>c.semesterId), ...Object.values(assign)]);
+  const remove=[]; for(let k=all.length-1;k>=0 && !used.has(all[k].id);k--) remove.push(all[k].id);
+  return {assign, add, remove};
+}
+const DEFAULT_META={title:"Untitled program", description:"", author:"", version:"1", basedOn:""};
+/* fills in missing fields (for example, in hand-made program files) */
+function normalize(st){
+  st.settings=Object.assign({perSemester:2, semMonths:4, perYear:3, minTotal:0, minSem:0, minElet:0}, st.settings||{});
+  if(!st.settings.courseStart) st.settings.courseStart=nextMonday();
+  st.punches=st.punches||{}; st.agenda=st.agenda||{}; st.books=st.books||{}; st.sems=st.sems||[]; st.meta=st.meta||{...DEFAULT_META};
+  for(const c of Object.values(st.courses||{})){
+    c.kind=c.kind||"obrig"; c.roles=c.roles||[c.kind]; if(c.chosen===undefined) c.chosen=true;
+    c.refs=c.refs||[]; c.prereq=c.prereq||[]; c.lists=c.lists||listsFor(c.kind); c.startedAt=c.startedAt||""; c.doneAt=c.doneAt||"";
+  }
+  return st;
+}
+
+function apply(state, ev){
+  const s=structuredClone(state); const p=ev.payload; const t=p.today||iso(new Date(ev.ts));
+  switch(ev.type){
+    case "settings.set": Object.assign(s.settings, p.patch); break;
+    case "course.add": s.courses[p.course.id]=p.course; break;
+    case "course.update": { const c=s.courses[p.id]; if(!c) break; const prev=c.status; Object.assign(c,p.patch);
+      if(p.patch.status && p.patch.status!==prev){
+        if(p.patch.status==="planned"){ c.startedAt=""; c.doneAt=""; }
+        if(p.patch.status==="active"){ if(!c.startedAt||prev==="planned") c.startedAt=t; c.doneAt="";
+          /* starting a course from a future term brings it to the current term */
+          if(prev==="planned" && p.patch.semesterId===undefined){
+            const sc=computeSchedule(state); const cs=Object.values(state.courses);
+            const cur=sc.sems.find(x=>x.start<=t && t<=x.end) || sc.sems.find(x=>cs.some(k=>k.semesterId===x.id && k.status!=="done"));
+            const mine=sc.sems.find(x=>x.id===c.semesterId);
+            if(cur && (!mine || mine.idx>cur.idx)) c.semesterId=cur.id;
+          } }
+        if(p.patch.status==="done"){ if(!c.startedAt) c.startedAt=t; c.doneAt=t; }
+      }
+      break; }
+    case "course.remove":
+      delete s.courses[p.id];
+      for(const c of Object.values(s.courses)) c.prereq=c.prereq.filter(x=>x!==p.id);
+      Object.values(s.courses).sort((a,b)=>a.num-b.num).forEach((c,i)=>{ c.num=i+1; });
+      break;
+    case "course.renumber": {
+      const c=s.courses[p.id]; if(!c) break;
+      const rest=Object.values(s.courses).filter(x=>x.id!==p.id).sort((a,b)=>a.num-b.num);
+      const pos=Math.max(1,Math.min(Math.round(p.to)||1, rest.length+1));
+      rest.splice(pos-1,0,c); rest.forEach((x,i)=>{ x.num=i+1; });
+      break; }
+    case "sem.insert": s.sems.splice(Math.max(0,Math.min(p.at,s.sems.length)),0,p.sem); break;
+    case "sem.remove":
+      s.sems=s.sems.filter(x=>x.id!==p.id);
+      for(const c of Object.values(s.courses)) if(c.semesterId===p.id) c.semesterId=null;
+      break;
+    case "plan.fill":
+      for(const ns of p.add) s.sems.push(ns);
+      for(const [cid,sid] of Object.entries(p.assign)) if(s.courses[cid]) s.courses[cid].semesterId=sid;
+      for(const id of p.remove||[]) if(!Object.values(s.courses).some(c=>c.semesterId===id)) s.sems=s.sems.filter(x=>x.id!==id);
+      break;
+    case "list.update": { const c=s.courses[p.courseId]; const l=c?.lists.find(x=>x.key===p.key); if(l) Object.assign(l,p.patch); break; }
+    case "punch.set":
+      if(p.patch===null) delete s.punches[p.date]; else s.punches[p.date]=Object.assign({},s.punches[p.date]||{},p.patch);
+      break;
+    case "meta.update": s.meta=Object.assign({},s.meta,p.patch); break;
+    case "agenda.add": s.agenda[p.item.id]=p.item; break;
+    case "agenda.update": if(s.agenda[p.id]) Object.assign(s.agenda[p.id],p.patch); break;
+    case "agenda.remove": delete s.agenda[p.id]; break;
+    case "book.add": s.books[p.book.id]=p.book; break;
+    case "book.update": if(s.books[p.id]) Object.assign(s.books[p.id],p.patch); break;
+  }
+  return s;
+}
+
+let S, G={profile:{}}, PROGS=null, DEVICE, pending=0;
+const stateKey=id=>"state:"+id;
+function applyG(g,ev){
+  const s=structuredClone(g); const p=ev.payload;
+  if(ev.type==="profile.set") s.profile=Object.assign({},s.profile,p.patch);
+  return s;
+}
+const APP_VERSION="1.0";
+async function dispatch(type,payload,opt={}){
+  const ev={id:uid(), device:DEVICE, ts:Date.now(), seq:null, program:PROGS?.active||"", type, payload};
+  const glob=type.startsWith("profile."); if(glob) G=applyG(G,ev); else S=apply(S,ev);
+  pending++; renderSave();
+  try{
+    await dbPut("events",ev);
+    if(glob) await dbPut("kv",G,"global");
+    else { await dbPut("kv",S,stateKey(S.id));
+      if(PROGS && PROGS.list[S.id] && PROGS.list[S.id].title!==S.meta.title){ PROGS.list[S.id].title=S.meta.title; await dbPut("kv",PROGS,"programs"); } }
+  }catch(e){ toast("Could not save on this device: "+e.message); }
+  pending--; if(!G.dirty){ G.dirty=true; try{ await dbPut("kv",G,"global"); }catch(e){} } renderSave();
+  if(opt.quiet){ renderProg(); calSummary(); } else render();
+}
+/* top indicator: ✓ when the configuration file is up to date; an orange dot when there are changes not yet saved to it */
+function renderSave(){ const el=$("#save"); if(!el) return;
+  if(pending){ el.innerHTML="…"; el.title="Saving"; return; }
+  if(G?.dirty){ el.innerHTML='<span class="dirty"></span>'; el.title=el.ariaLabel="Changes not saved to your configuration file. Tap to save it."; }
+  else { el.innerHTML="<b>✓</b>"; el.title=el.ariaLabel=G?.lastExport?"Configuration file up to date":"No changes to save"; } }
+
+/* ---------- Several programs ---------- */
+const progList = () => Object.values(PROGS.list).sort((a,b)=>a.title.localeCompare(b.title));
+async function saveProgs(){ await dbPut("kv",PROGS,"programs"); }
+/* any change not yet in the configuration file turns the mark at the top into an orange dot */
+async function markDirty(){ if(!G.dirty){ G.dirty=true; try{ await dbPut("kv",G,"global"); }catch(e){} } renderSave(); }
+async function addProgram(st){
+  st.id=st.id||"p-"+uid(); await dbPut("kv",st,stateKey(st.id));
+  PROGS.list[st.id]={id:st.id,title:st.meta.title}; await saveProgs(); await markDirty();
+  return st.id;
+}
+async function switchProgram(id){
+  const st=await dbGet("kv",stateKey(id)); if(!st) return toast("Program not found on this device.");
+  S=normalize(st); S.id=id; PROGS.active=id; await saveProgs(); await dbPut("kv",S,stateKey(id));
+  OPEN_CARDS.clear(); FILTER="all"; NEWC=false; render();
+}
+async function deleteProgram(id){
+  await dbDel("kv",stateKey(id)); delete PROGS.list[id]; await markDirty();
+  if(!Object.keys(PROGS.list).length){ PROGS.active=""; S=null; await saveProgs(); return render(); }
+  if(PROGS.active===id) await switchProgram(progList()[0].id); else { await saveProgs(); render(); }
+}
+
+/* ---------- Program format (import and export) ---------- */
+const FORMAT="stu-course";
+function exportData(st){
+  const bookIds={}; let k=0;
+  const books=Object.values(st.books).filter(b=>Object.values(st.courses).some(c=>c.refs.some(r=>r.bookId===b.id)))
+    .map(b=>{ const id="b"+(++k); bookIds[b.id]=id; return {id, authors:b.authors||"", title:b.title||"", edition:b.edition||"", publisher:b.publisher||"", year:b.year||"", url:b.url||""}; });
+  const cs=Object.values(st.courses).sort((a,b)=>a.num-b.num);
+  return {format:FORMAT, version:1,
+    course:{title:st.meta.title, description:st.meta.description||"", author:st.meta.author||"", version:st.meta.version||"1", basedOn:st.meta.basedOn||"", language:"en"},
+    settings:{monthsPerPeriod:st.settings.semMonths, periodsPerYear:st.settings.perYear, coursesPerPeriod:st.settings.perSemester, minCourses:st.settings.minTotal||0, minElectives:st.settings.minElet||0, minSeminars:st.settings.minSem||0},
+    books,
+    courses:cs.map(c=>({number:c.num, code:c.code||"", name:c.name, kind:c.kind||"obrig", roles:c.roles||[c.kind||"obrig"], hours:c.hours, prerequisites:c.prereq.map(id=>st.courses[id]?.num).filter(Boolean),
+      books:c.refs.filter(r=>bookIds[r.bookId]).map(r=>({book:bookIds[r.bookId], role:r.role==="principal"?"main":"supplementary", chapters:r.chapters||""})),
+      reference:{name:c.refLabel||"", url:c.refUrl||""}, ...(c.minDone?{minCompleted:c.minDone}:{})}))};
+}
+function programFromData(o){
+  if(!o || o.format!==FORMAT || !Array.isArray(o.courses)) throw new Error("The file is not in the app's program format.");
+  const set=o.settings||{}, meta=o.course||{};
+  const st={version:3, meta:{title:String(meta.title||"Untitled program"), description:meta.description||"", author:meta.author||"", version:String(meta.version||"1"), basedOn:meta.basedOn||"", handbookUrl:/^https?:\/\//.test(meta.handbook||"")?meta.handbook:""},
+    settings:{perSemester:num(set.coursesPerPeriod,2), courseStart:nextMonday(), semMonths:num(set.monthsPerPeriod,4), perYear:num(set.periodsPerYear,3), minTotal:num(set.minCourses,STANDARD.courses), minSem:num(set.minSeminars,STANDARD.seminars), minElet:num(set.minElectives,STANDARD.electives)},
+    courses:{}, books:{}, sems:[], punches:{}, agenda:{}};
+  const bmap={};
+  for(const b of o.books||[]){ const id="b-"+uid(); bmap[b.id]=id; st.books[id]={id, authors:b.authors||"", title:b.title||"Book", edition:b.edition||"", publisher:b.publisher||"", year:b.year||"", url:b.url||"", link:""}; }
+  const list=[...o.courses].sort((a,b)=>num(a.number,0)-num(b.number,0)); const nmap={};
+  list.forEach((c,i)=>{ const id="c-"+uid(); nmap[c.number]=id; const kind=KIND[c.kind]?c.kind:"obrig";
+    st.courses[id]={id, num:i+1, code:String(c.code||""), kind, chosen:kind==="obrig", name:String(c.name||`Course ${i+1}`), hours:num(c.hours,DEFAULT_HOURS), prereq:[], semesterId:null, status:"planned", startedAt:"", doneAt:"", notes:"",
+      refs:(c.books||[]).filter(r=>bmap[r.book]).map(r=>({bookId:bmap[r.book], role:/^(main|principal)$/i.test(r.role)?"principal":"complementar", chapters:r.chapters||""})),
+      refLabel:c.reference?.name||"", refUrl:c.reference?.url||"", roles:Array.isArray(c.roles)&&c.roles.every(r=>KIND[r])?c.roles:[kind], lists:listsFor(kind), minDone:num(c.minCompleted,0)}; });
+  for(const c of list){ const me=st.courses[nmap[c.number]]; me.prereq=(c.prerequisites||[]).map(n=>nmap[n]).filter(Boolean); }
+  const {assign,add}=fillPlan(st); st.sems=add; for(const [cid,sid] of Object.entries(assign)) st.courses[cid].semesterId=sid;
+  return st;
+}
+function parseCSV(text){
+  text=text.replace(/^\uFEFF/,""); const first=text.split(/\r?\n/)[0]||""; const d=(first.match(/;/g)||[]).length>=(first.match(/,/g)||[]).length?";":",";
+  const rows=[]; let row=[], f="", q=false;
+  for(let i=0;i<text.length;i++){ const ch=text[i];
+    if(q){ if(ch==='"'){ if(text[i+1]==='"'){ f+='"'; i++; } else q=false; } else f+=ch; }
+    else if(ch==='"') q=true; else if(ch===d){ row.push(f); f=""; } else if(ch==="\n"||ch==="\r"){ if(ch==="\r"&&text[i+1]==="\n") i++; row.push(f); rows.push(row); row=[]; f=""; } else f+=ch; }
+  if(f!==""||row.length){ row.push(f); rows.push(row); }
+  return rows.filter(r=>r.some(x=>x.trim()!==""));
+}
+const CSV_COLS=["number","code","name","type","hours","prerequisites","main_book","main_chapters","supplementary_book","supplementary_chapters","reference_name","reference_url"];
+function csvToData(text, title){
+  const rows=parseCSV(text); if(rows.length<2) throw new Error("The CSV needs a header and at least one course.");
+  const head=rows[0].map(h=>slug(h).replace(/-/g,"_"));
+  if(!head.includes("name")) throw new Error("The CSV needs a 'name' column.");
+  const books=[], bk={}; const bookOf=t=>{ t=t.trim(); if(!t) return null; if(!bk[t]){ bk[t]="b"+(books.length+1); books.push({id:bk[t],title:t}); } return bk[t]; };
+  const courses=rows.slice(1).map((r,i)=>{ const v=k=>(r[head.indexOf(k)]||"").trim(); const bs=[];
+    const m=bookOf(v("main_book")); if(m) bs.push({book:m,role:"main",chapters:v("main_chapters")});
+    const s=bookOf(v("supplementary_book")); if(s) bs.push({book:s,role:"supplementary",chapters:v("supplementary_chapters")});
+    const tp=slug(v("type")); const kind=tp.startsWith("sem")?"sem":tp.startsWith("rel")||tp.startsWith("free")||tp.startsWith("opt")?"opt":tp.startsWith("ele")?"elet":"obrig";
+    const nr=num(v("number"),i+1);
+    return {number:nr, code:v("code"), name:v("name"), kind, hours:num(v("hours"),DEFAULT_HOURS), prerequisites:v("prerequisites").split(/[\s,|/]+/).filter(Boolean).map(Number), books:bs, reference:{name:v("reference_name"),url:v("reference_url")}}; })
+    .filter(c=>c.name);
+  return {format:FORMAT, version:1, course:{title}, settings:{}, books, courses};
+}
+function csvTemplate(){
+  return "\uFEFF"+CSV_COLS.join(";")+"\r\n"+["1","MATH 101","Single Variable Calculus","fixed","170","","Stewart, Calculus: Early Transcendentals, 9th ed.","1–11","Thomas' Calculus, 14th ed.","","MIT 18.01","https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/"].join(";")+"\r\n"
+    +["2","MATH 410","Topics in Analysis","elective","170","1","","","","","MIT 18.104",""].join(";")+"\r\n";
+}
+/* a program is accepted only if it meets the minimum structure */
+async function importCourse(data, info={}){
+  let st; try{ st=programFromData(data); }catch(e){ return toast(e.message); }
+  if(info.handbook && !st.meta.handbookUrl) st.meta.handbookUrl=info.handbook;
+  const probs=structureProblems(st);
+  if(probs.length){ const d=$("#dlg"); OPEN_COURSE=null;
+    d.innerHTML=`<div class="dh"><h2 style="margin:0">Program not accepted</h2><button class="btn sm" data-act="close" aria-label="Close">✕</button></div>
+    <div class="db"><p>"${esc(st.meta.title)}" does not meet the minimum structure of a Self-Taught University program:</p>
+    <ul class="small" style="padding-left:1.2rem">${probs.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    <p class="small muted">Every program needs ${STANDARD.core} fixed courses, a catalog with at least ${STANDARD.electives} electives and ${STANDARD.seminars} courses that can be taken as a seminar, and ${STANDARD.courses} courses required to complete it, each of at least ${STANDARD.hours} hours with a code, a name, and a primary textbook. The Guide explains the structure.</p></div>`;
+    if(!d.open) d.showModal(); return; }
+  const id=await addProgram(st); TAB="hoje"; await switchProgram(id); window.scrollTo(0,0);
+  toast(`"${st.meta.title}" started.`);
+}
+
+/* ---------- Derived ---------- */
+/* appearance: per device, kept in local storage */
+const getTheme = () => { try{ return localStorage.getItem("stu-theme")||"system"; }catch(e){ return "system"; } };
+function applyTheme(t){
+  if(t==="light"||t==="dark") document.documentElement.setAttribute("data-theme",t); else document.documentElement.removeAttribute("data-theme");
+  const dark = t==="dark" || (t!=="light" && matchMedia("(prefers-color-scheme: dark)").matches);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark?"#12151C":"#1C2230");
+}
+const UNI="Self-Taught University";
+const uniName = () => UNI;
+const ccode = c => c.code || String(c.num);
+const cname = c => `${ccode(c)} ${c.name}`;
+const coursesArr = () => Object.values(S.courses).sort((a,b)=>a.num-b.num);
+const chosenArr = () => coursesArr().filter(c=>c.chosen!==false);
+function reqStatus(){
+  const ch=chosenArr(); const done=ch.filter(c=>c.status==="done");
+  const ob=coursesArr().filter(c=>c.kind==="obrig"); const obDone=ob.filter(c=>c.status==="done").length;
+  const isSem=c=>c.kind==="sem"; const elDone=done.filter(c=>bucket(c)==="elet").length; const minE=num(S.settings.minElet,0);
+  const semDone=done.filter(isSem).length, semChosen=ch.filter(isSem).length;
+  const minT=num(S.settings.minTotal,0)||ch.length, minS=num(S.settings.minSem,0);
+  const elCh=ch.filter(c=>bucket(c)==="elet").length, minF=Math.max(0,minT-ob.length-minE);
+  const freeCh=ch.filter(c=>bucket(c)==="opt").length, freeDone=done.filter(c=>bucket(c)==="opt").length;
+  return {obDone, obTot:ob.length, semDone, semChosen, minS, done:done.length, minT, chosen:ch.length,
+    elDone, elCh, minE, freeCh, freeDone, minF, complete: obDone===ob.length && semDone>=minS && elDone>=minE && freeDone>=minF && done.length>=minT};
+}
+const semsArr = () => sched().sems;
+const semById = id => semsArr().find(x=>x.id===id);
+const doneCount = () => chosenArr().filter(c=>c.status==="done").length;
+const delivered = l => !!l.link;
+const listsDone = c => c.lists.filter(delivered).length;
+const inSem = id => coursesArr().filter(c=>c.semesterId===id);
+const usedBy = bookId => coursesArr().filter(c=>c.refs.some(r=>r.bookId===bookId));
+function cite(b){
+  if(!b) return "Book removed";
+  return [b.authors, b.title, b.edition, [b.publisher,b.year].filter(Boolean).join(", ")].map(x=>String(x??"").trim().replace(/\.$/,"")).filter(Boolean).map(esc).join(". ")+".";
+}
+const shortBook = b => b ? `${esc((b.authors||"").split(/,| and /)[0].trim().split(" ").pop())}${b.authors?", ":""}${esc(b.title)}` : "Book removed";
+
+function alertsFor(c){
+  const a=[]; if(c.chosen===false) return a; const started=c.status!=="planned";
+  const pend=c.prereq.filter(id=>S.courses[id] && S.courses[id].status!=="done");
+  if(started && pend.length) a.push({lv:"warn", t:`Prerequisite not completed: ${pend.map(id=>ccode(S.courses[id])).join(", ")}`});
+  const mine=c.semesterId && semById(c.semesterId);
+  if(!started && mine && pend.length){
+    const bad=pend.filter(id=>{ const ps=semById(S.courses[id].semesterId); return !ps || ps.idx>=mine.idx; });
+    if(bad.length) a.push({lv:"warn", t:`Prerequisite ${bad.map(id=>ccode(S.courses[id])).join(", ")} is not in an earlier term`});
+  }
+  if(c.minDone && started && doneCount()<c.minDone) a.push({lv:"warn", t:`Recommended after ${c.minDone} completed courses (${doneCount()} so far)`});
+  if(mine){ const n=inSem(c.semesterId).length; if(n>S.settings.perSemester) a.push({lv:"warn", t:`${n} courses in ${mine.name} (standard is ${S.settings.perSemester})`}); }
+  if(c.status==="done" && listsDone(c)<c.lists.length) a.push({lv:"warn", t:`Completed with ${c.lists.length-listsDone(c)} assignment(s) not submitted`});
+  if(c.status!=="done") for(const l of c.lists){
+    const due=dueOf(c,l); if(delivered(l) || !due) continue; const d=daysUntil(due);
+    if(d<0) a.push({lv:"late", t:`${l.label} overdue since ${fmtShort(due)}`});
+    else if(d<=7) a.push({lv:"soon", t:`${l.label} ${d===0?"due today":`due in ${d} day${d>1?"s":""}`} (${fmtShort(due)})`});
+  }
+  return a;
+}
+const topLv = a => a.reduce((m,x)=>!m||LV[x.lv].rank>LV[m].rank?x.lv:m, null);
+function forecast(){
+  const rest=chosenArr().filter(c=>c.status!=="done");
+  const hours=rest.reduce((t,c)=>t+num(c.hours,0),0);
+  const ends=rest.map(c=>sched().course[c.id]?.end).filter(Boolean);
+  let plan=ends.length===rest.length&&rest.length?ends.sort().pop():"";
+  /* courses the student has not chosen yet still need terms: fill the open slots, then add terms */
+  const missing=Math.max(0,num(S.settings.minTotal,0)-chosenArr().length);
+  if(plan && missing){ const per=Math.max(1,num(S.settings.perSemester,2)), t=today();
+    const free=semsArr().filter(x=>!x.end||x.end>=t).reduce((n,x)=>n+Math.max(0,per-inSem(x.id).length),0);
+    const extra=Math.ceil(Math.max(0,missing-free)/per); if(extra) plan=addMonths(plan, extra*num(S.settings.semMonths,4)); }
+  return {hours,plan};
+}
+/* hours per week each course in progress requires: hours ÷ weeks in its window */
+function weeklyNeed(list){
+  return list.map(c=>{ const w=sched().course[c.id]; if(!w?.start) return null;
+    const weeks=Math.max(1,(daysBetween(w.start,w.nomEnd)+1)/7); return {c, h:Math.round(num(c.hours,0)/weeks*10)/10}; }).filter(Boolean);
+}
+const hfmt=h=>String(Math.round(h*10)/10);
+
+/* ---------- Navigation ---------- */
+const ICON = {
+  hoje:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
+  grade:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1.5" fill="currentColor"/><circle cx="14" cy="12" r="1.5" fill="currentColor"/><circle cx="10" cy="18" r="1.5" fill="currentColor"/></svg>',
+  agenda:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  hist:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  ajustes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>'
+};
+const TABS=[["hoje","Today"],["grade","Courses"],["agenda","Calendar"],["hist","Transcript"],["ajustes","Settings"]];
+let TAB="hoje", FILTER="all", CAL={y:new Date().getFullYear(), m:new Date().getMonth(), sel:today()};
+try{ TAB=localStorage.getItem("stu-tab")||"hoje"; }catch(e){}
+if(!TABS.some(([k])=>k===TAB)) TAB="hoje";
+function renderNav(){ $("#nav").innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${k===TAB?'aria-current="page"':""}>${ICON[k]}<span>${l}</span></button>`).join(""); }
+function go(t){ TAB=t; try{localStorage.setItem("stu-tab",t);}catch(e){} render(); window.scrollTo(0,0); }
+function renderBrand(){ const h=document.querySelector("header h1"); if(h && h.textContent!==uniName()) h.textContent=uniName(); if(document.title!==uniName()) document.title=uniName(); }
+function renderProg(){ renderBrand(); if(!S){ const el=$("#prog"); if(el) el.innerHTML=""; return; }
+  const el=$("#prog"); if(!el||!PROGS) return; const list=progList();
+  el.innerHTML = list.length>1
+    ? `<label class="sr">Program</label><select id="progSel" aria-label="Program in use">${list.map(p=>`<option value="${p.id}" ${p.id===PROGS.active?"selected":""}>${esc(p.title)}</option>`).join("")}</select>`
+    : `<span>${esc(S.meta.title)}</span>`;
+}
+function focusKey(){
+  const el=document.activeElement; if(!el||!/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return null;
+  const attr=[...el.attributes].find(a=>a.name.startsWith("data-")); const sel=el.id?`#${el.id}`:attr?`[${attr.name}="${CSS.escape(attr.value)}"]`:null;
+  if(!sel) return null; let start=null; try{ start=el.selectionStart; }catch(e){}
+  return {sel, value:el.value, start, inDlg:!!el.closest("dialog")};
+}
+function restoreFocus(k){
+  if(!k) return; const el=document.querySelector(k.sel); if(!el) return;
+  if(el.value!==k.value && el.tagName!=="SELECT") el.value=k.value;
+  el.focus({preventScroll:true}); try{ if(k.start!=null) el.setSelectionRange(k.start,k.start); }catch(e){}
+}
+/* installation as an app: Chrome and Edge offer a prompt; iPhone needs Share › Add to Home Screen */
+let INSTALL_EVT=null;
+const isStandalone=()=>{ try{ return matchMedia("(display-mode: standalone)").matches || navigator.standalone===true; }catch(e){ return false; } };
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); INSTALL_EVT=e; if(typeof render==="function") render(); });
+addEventListener("appinstalled",()=>{ INSTALL_EVT=null; if(typeof render==="function") render(); toast("App installed. Open it from your apps."); });
+/* what the student does and what the app does: shown on the app page, the welcome screen, and in the Guide */
+const YOUR_PART=`<p class="small" style="margin:.2rem 0 .3rem"><b>You do:</b></p>
+  <ul class="small" style="padding-left:1.2rem;margin:0 0 .6rem">
+    <li>Prepare each assignment from the course's books and reference course, solve it, and save it as a PDF.</li>
+    <li>Store your files wherever you choose (Google Drive, for example), make each link public so that anyone with it can open the file, and paste the link in the app.</li>
+    <li>Create your diploma, publish it the same way, and paste its link in the app.</li>
+    <li>Download your verification page from the app and publish it yourself, on any web host (GitHub Pages, for example).</li>
+    <li>Save your configuration file from time to time and keep it safe.</li>
+  </ul>
+  <p class="small" style="margin:0 0 .3rem"><b>The app does:</b></p>
+  <ul class="small" style="padding-left:1.2rem;margin:0">
+    <li>Plans your terms and due dates, keeps the protocol of every course, and records the links you paste, your dates, and your study hours.</li>
+    <li>Builds your transcript and the verification page file.</li>
+    <li>It does not store, check, or publish any file, and it cannot tell whether a link is public.</li>
+  </ul>`;
+let AVAIL=null;   /* programs listed in programs/index.json next to the app, if any */
+async function loadAvail(){
+  try{ const r=await fetch("programs/index.json",{cache:"no-cache"}); if(!r.ok) throw 0; const j=await r.json(); AVAIL=Array.isArray(j.programs)?j.programs:[]; }
+  catch(e){ AVAIL=[]; }
+  /* tell once about programs published since the last visit */
+  const titles=AVAIL.map(p=>p.title);
+  if(!Array.isArray(G.seenPrograms)){ G.seenPrograms=titles; try{ await dbPut("kv",G,"global"); }catch(e){} }
+  else { const mine=new Set(progList().map(p=>p.title)); const fresh=titles.filter(t=>!G.seenPrograms.includes(t));
+    if(fresh.length){ G.seenPrograms=[...G.seenPrograms,...fresh]; try{ await dbPut("kv",G,"global"); }catch(e){}
+      const show=fresh.filter(t=>!mine.has(t)); if(show.length && S) toast(`New program available: ${show.join(", ")}. See Settings › Programs.`); } }
+  if(!S) return render();
+  render();
+  /* a program from the list that has no handbook link yet (for example, started before links were kept) gets it now */
+  if(!S.meta.handbookUrl){ const p=AVAIL.find(x=>x.title===S.meta.title && x.handbook);
+    if(p) await dispatch("meta.update",{patch:{handbookUrl:new URL(p.handbook,location.href).href}}); }
+}
+/* in the browser the app only presents itself and offers installation; it runs once installed */
+function viewLanding(){
+  const ua=navigator.userAgent; const iosSafari=isIOS() && /safari/i.test(ua) && !/crios|fxios|edgios|opios/i.test(ua);
+  const how = location.protocol==="file:" ? `<p>This copy was opened as a file. To install the app, open its published address in Chrome or Edge, or in Safari on iPhone and iPad.</p>`
+    : INSTALL_EVT ? `<button class="btn primary" data-act="install">Install app</button>`
+    : iosSafari ? `<p>Tap <b>Share</b> and then <b>Add to Home Screen</b>.</p>`
+    : isIOS() ? `<p>On iPhone and iPad, open this page in <b>Safari</b> and tap <b>Share › Add to Home Screen</b>.</p>`
+    : `<p>Open your browser's menu and choose <b>Install app</b> (on Android it may say <b>Add to Home screen</b>). If your browser does not offer it, open this page in <b>Chrome</b> or <b>Edge</b>.</p>`;
+  return `<section class="panel" style="text-align:center">
+      <img src="logo.png" alt="Self-Taught University" style="width:min(340px,85%);height:auto;margin:.5rem auto 1rem;display:block">
+      <h2 style="margin:0 0 .6rem">Study a university program on your own</h2>
+      <p style="text-align:left">Self-Taught University is a free app for studying a complete undergraduate program on your own and keeping the record that proves it. It provides no lessons, problems, or grades: you study from each course's books and reference course, prepare and solve your own assignments, and keep the files. The app organizes the program, keeps a minimum protocol for every course, and records your work.</p>
+      <p style="text-align:left">Every program has the same structure: ${STANDARD.courses} courses of ${STANDARD.hours} hours, with ${STANDARD.core} fixed courses, ${STANDARD.electives} electives, free electives, and ${STANDARD.seminars} seminars.</p></section>
+    <section class="panel"><h3>What you do, and what the app does</h3>${YOUR_PART}</section>
+    <section class="panel"><h3>Install the app</h3>
+      <p class="small">The app runs once installed: it opens like any other app, works offline, and updates itself.</p>
+      ${how}
+      <p class="small muted" style="margin-top:.8rem">Already installed? Open Self-Taught University from your apps.</p></section>`;
+}
+function viewWelcome(){
+  if(AVAIL===null) loadAvail();
+  const list=(AVAIL||[]).map((p,i)=>`<div class="card" style="padding:.9rem 1rem">
+      <h3 style="margin:0 0 .3rem">${esc(p.title)}</h3>
+      ${p.description?`<p class="small" style="margin:0 0 .4rem">${esc(p.description)}</p>`:""}
+      <p class="small muted" style="margin:0 0 .7rem">${[p.courses?`${p.courses} courses`:"",p.hours?`${Number(p.hours).toLocaleString("en-US")} hours`:"",p.basedOn?`inspired by ${esc(p.basedOn)}`:""].filter(Boolean).join(" · ")}</p>
+      <div class="row"><button class="btn primary" data-avail="${i}">Start this program</button>${p.handbook?`<a class="btn" href="${esc(p.handbook)}" target="_blank" rel="noopener">Handbook</a>`:""}</div></div>`).join("");
+  return `<section class="panel"><h2>Welcome</h2>
+    <p>Self-Taught University helps you follow a complete undergraduate program on your own and keep the record that proves it: it plans your terms, keeps the due dates of the assignments you prepare, logs your study hours, and builds your transcript. Everything stays on this device.</p>
+    <p>To begin, choose the program you want to follow.</p></section>
+  ${AVAIL===null?`<section class="panel"><p class="muted">Looking for programs…</p></section>`
+    :AVAIL.length?`<section class="panel"><h3>Available programs</h3>${list}</section>`:""}
+  <section class="panel"><p class="small" style="margin:0">You prepare and publish your own work, diploma, and verification page; the app keeps the record.</p>
+    <details class="more"><summary>What you do, and what the app does</summary>${YOUR_PART}</details></section>
+  <section class="panel"><h3>${AVAIL&&AVAIL.length?"Other ways to start":"Load a program"}</h3>
+    <p class="small"><b>Your own program, from a file.</b> A program is a .json or .csv file with its courses, books, and requirements. It must follow the minimum structure: ${STANDARD.core} fixed courses, ${STANDARD.electives} electives, ${STANDARD.seminars} seminars, and ${STANDARD.courses} courses of ${STANDARD.hours} hours in total.</p>
+    <div class="row" style="margin-bottom:1rem"><button class="btn" data-act="importFile">Choose program file</button></div>
+    <p class="small"><b>Your own program, from a link.</b> Paste the address of a program file published online.</p>
+    <div class="row" style="margin-bottom:1rem;flex-wrap:nowrap"><input id="importUrl" class="hin" type="url" placeholder="https://…/program.json" aria-label="Link to a program file" style="flex:1;max-width:none"><button class="btn" data-act="importUrl">Load</button></div>
+    <p class="small"><b>Restore your own data.</b> If you used the app before, load the configuration file you saved with "Save configuration". It brings back your programs and progress.</p>
+    <div class="row"><button class="btn" data-act="restore">Load configuration</button></div>
+  </section>`;
+}
+function render(){
+  const sv=$("#save"); if(sv) sv.style.display=(isStandalone()&&S)?"":"none";
+  if(!isStandalone()){ $("#nav").innerHTML=""; const pe=$("#prog"); if(pe) pe.innerHTML=""; renderBrand(); $("#view").innerHTML=viewLanding(); return; }
+  if(!S){ renderBrand(); $("#nav").innerHTML=""; renderProg(); $("#view").innerHTML=viewWelcome(); renderSave(); return; }
+  if(AVAIL===null){ AVAIL=[]; loadAvail(); }
+  const fk=focusKey();
+  renderNav(); renderProg();
+  $("#view").innerHTML=({hoje:viewHoje, grade:viewGrade, agenda:viewAgenda, hist:viewHist, ajustes:viewAjustes}[TAB]||viewHoje)();
+  if($("#dlg").open && OPEN_COURSE) renderCourseDialog(OPEN_COURSE);
+  restoreFocus(fk); calSummary();
+  if(TAB==="ajustes" && navigator.storage?.estimate) navigator.storage.estimate().then(u=>{ const el=$("#usage"); if(el) el.textContent=`Storage used on this device: ${(u.usage/1048576).toFixed(1)} MB.`; }).catch(()=>{});
+}
+
+/* ---------- Components ---------- */
+const chip = st => `<span class="chip ${st}">${STATUS[st].label}</span>`;
+function alertsHTML(list){
+  if(!list.length) return `<p class="empty">Nothing needs attention.</p>`;
+  return list.sort((a,b)=>LV[b.lv].rank-LV[a.lv].rank).map(x=>`<div class="alert"><span class="dot ${x.lv}"></span><span class="lv">${LV[x.lv].label}</span><span>${x.c?`<button class="btn sm" data-open="${x.c}">${esc(S.courses[x.c].num)}</button> `:""}${esc(x.t)}</span></div>`).join("");
+}
+function listState(c,l){ if(delivered(l)) return "ok"; const due=dueOf(c,l); if(!due) return "none"; const d=daysUntil(due); return d<0?"late":d<=7?"soon":"pend"; }
+const LS_TXT={ok:"submitted",none:"no date",late:"overdue",soon:"due soon",pend:"pending"};
+function listPill(c,l){
+  const st=listState(c,l); const due=dueOf(c,l); const when=st==="ok"?dm(l.deliveredAt):due?dm(due):"";
+  const tipAct=st==="ok"?"Tap to open.":"Tap to paste the PDF link.";
+  const tip=`${l.label}: ${LS_TXT[st]}${due?`, due ${fmt(due)}`:""}. ${tipAct}`;
+  const inner=`${esc(l.label)}${when?` · ${when}`:""}`;
+  if(st==="ok" && l.link) return `<a class="lp" data-s="ok" href="${esc(l.link)}" target="_blank" rel="noopener" title="${esc(tip)}">${inner}</a>`;
+  return `<button class="lp" data-s="${st}" data-linklist="${c.id}|${l.key}" title="${esc(tip)}" aria-label="${esc(tip)}">${inner}</button>`;
+}
+const MES=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const mon=s=>{ if(!s) return ""; const [y,m]=s.split("-"); return `${MES[+m-1]} ${y}`; };
+/* collapsible sections remember whether they were open */
+const OPEN_SEC=new Set(["dlg-listas"]);
+const sec=(id,title,body,cls="")=>`<details class="sec ${cls}" data-sec="${id}" ${OPEN_SEC.has(id)?"open":""}><summary>${title}</summary><div class="secb">${body}</div></details>`;
+const OPEN_CARDS=new Set();
+/* switchable role: seminar (up to the required number) or the other possible classification */
+function roleHTML(c){
+  if(c.chosen===false || c.kind==="obrig") return "";
+  const locked=c.lists.some(delivered), b=bucket(c), others=chosenArr().filter(x=>x.id!==c.id);
+  const elN=others.filter(x=>bucket(x)==="elet").length, frN=others.filter(x=>bucket(x)==="opt").length, smN=others.filter(x=>x.kind==="sem").length;
+  const minE=num(S.settings.minElet,0), minS=num(S.settings.minSem,0), minF=reqStatus().minF;
+  const label = c.kind==="sem" ? `Seminar, counted as ${b==="elet"?"an elective":"a free elective"}` : b==="elet" ? "Elective" : "Free elective";
+  const btns=[];
+  if(!locked){
+    if(b==="opt" && canElet(c) && elN<minE) btns.push(`<button class="btn sm" data-setkind="${c.id}|elet">Count as elective</button>`);
+    if(b==="elet" && frN<minF) btns.push(`<button class="btn sm" data-setkind="${c.id}|opt">Count as free elective</button>`);
+    if(c.kind!=="sem" && canSem(c) && smN<minS) btns.push(`<button class="btn sm" data-setkind="${c.id}|sem">Take as a seminar</button>`);
+    if(c.kind==="sem") btns.push(`<button class="btn sm" data-setkind="${c.id}|${b}">Stop taking as a seminar</button>`);
+  }
+  return `<div class="row small" style="margin-top:.4rem"><span class="muted">${label}</span>${btns.join("")}</div>`;
+}
+/* catalog: one button for each way the course can be taken, while that group still has room */
+function addAsHTML(c){
+  const r=reqStatus(); const opts=[];
+  if(canElet(c) && r.elCh<r.minE) opts.push(["elet","Elective"]);
+  if(r.freeCh<r.minF) opts.push(["opt","Free elective"]);
+  if(canSem(c) && r.semChosen<r.minS) opts.push(["sem","Seminar"]);
+  if(!opts.length) opts.push([canElet(c)?"elet":"opt","Add"]);
+  return `<div class="row" style="margin-top:.45rem;gap:.4rem">${opts.map(([k,t])=>`<button class="btn sm" data-addas="${c.id}|${k}">${t}</button>`).join("")}</div>`;
+}
+function card(c,force=false,extra="",startBtn=false){
+  const a=alertsFor(c); const lv=topLv(a); const open=force||OPEN_CARDS.has(c.id); const cat=c.chosen===false;
+  const tag="";
+  return `<div class="card" data-st="${c.status}" ${lv?`data-al="${lv}"`:""} ${lv?`title="${esc(a.map(x=>x.t).join("; "))}"`:""}>
+    <div class="spread"><button class="ct" ${force?"":`data-toggle="${c.id}" aria-expanded="${open}"`} style="flex:1"><span class="n">${esc(ccode(c))}</span>${esc(c.name)}${tag}</button>${extra?`<span class="small muted">${extra}</span>`:""}${startBtn?`<button class="btn sm" data-start="${c.id}">Start</button>`:""}</div>${cat?addAsHTML(c):""}
+    ${open?`${cat?"":`<div class="lrow">${c.lists.map(l=>listPill(c,l)).join("")}</div>`}${roleHTML(c)}
+      ${lv?`<p class="small" style="margin:.4rem 0 0">${esc(a.sort((x,y)=>LV[y.lv].rank-LV[x.lv].rank)[0].t)}</p>`:""}
+      <div class="xinfo small">
+        ${c.refs.map(r=>{const b=S.books[r.bookId]; if(!b) return ""; return `<div class="spread line"><span>${shortBook(b)}${r.chapters?`, ch. ${esc(r.chapters)}`:""}</span>${b.link?`<a class="btn sm" href="${esc(b.link)}" target="_blank" rel="noopener">File</a>`:b.url?`<a class="btn sm" href="${esc(b.url)}" target="_blank" rel="noopener">Site</a>`:""}</div>`;}).join("")}
+        ${c.refUrl?`<div class="line"><a href="${esc(c.refUrl)}" target="_blank" rel="noopener">${esc(c.refLabel||"Reference course")}</a></div>`:""}
+        <div class="line muted">${num(c.hours,0)} h${c.prereq.length?` · prerequisites ${c.prereq.map(id=>S.courses[id]&&ccode(S.courses[id])).filter(Boolean).join(", ")}`:""}</div>
+      </div>
+      <div class="row" style="margin-top:.4rem;justify-content:flex-end"><button class="btn sm" data-open="${c.id}">Edit</button></div>`:""}
+  </div>`;
+}
+function calSummary(){
+  const el=$("#calSummary"); if(!el) return; const sm=semsArr(); const f=forecast();
+  const w=(S.settings.semMonths||4)*4.345; const ch=chosenArr(); const avg=ch.length?ch.reduce((t,c)=>t+num(c.hours,0),0)/ch.length:DEFAULT_HOURS;
+  el.textContent = sm.length ? `${sm.length} terms, ${sm.at(-1).year} years${f.plan?`, finishing ${mon(f.plan)}`:""}; about ${hfmt(S.settings.perSemester*avg/w)} h per week.` : "";
+}
+function profileLine(){
+  const pf=G.profile||{}; if(!pf.name && !pf.link) return "";
+  return `<p class="small muted" style="margin:0 0 .3rem">${pf.name?esc(pf.name):""}${pf.name&&pf.link?" · ":""}${pf.link?`<a href="${esc(pf.link)}" target="_blank" rel="noopener">${esc(pf.linkLabel||pf.link.replace(/^https?:\/\//,""))}</a>`:""}</p>`;
+}
+/* ---------- Screens ---------- */
+function viewHoje(){
+  const t=today(); const p=S.punches[t]; const all=chosenArr(); const rs=reqStatus();
+  const weekSum=ws=>{ let s=0; for(let i=0;i<7;i++){ const d=addDays(ws,i); if(S.punches[d]?.done) s+=num(S.punches[d].hours,0); } return s; };
+  const ws=weekStart(t); const wk=weekSum(ws);
+  const sems=semsArr(); const cur=sems.find(x=>x.start<=t && t<=x.end) || sems.find(x=>inSem(x.id).some(c=>c.status!=="done"));
+  const active=all.filter(c=>c.status==="active");
+  const curPlanned=cur?inSem(cur.id).filter(c=>c.status==="planned"):[];
+  const need=weeklyNeed(active); const total=need.reduce((s,x)=>s+x.h,0);
+  const done=all.filter(c=>c.status==="done"); const totH=all.reduce((s,c)=>s+num(c.hours,0),0), doneH=done.reduce((s,c)=>s+num(c.hours,0),0);
+  const pct=rs.minT?Math.min(100,Math.round(rs.done/rs.minT*100)):0; const f=forecast();
+  const weeks=[]; for(let k=7;k>=0;k--){ const w0=addDays(ws,-7*k); weeks.push({w0,h:weekSum(w0)}); }
+  const max=Math.max(total,...weeks.map(x=>x.h),1);
+  const ap=Object.values(S.agenda).filter(x=>x.date===t).sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
+  const intro=S.introDone?"":`<section class="panel" style="border-left:4px solid var(--st-active)"><h3>Getting started</h3>
+    <ol class="small" style="margin:.3rem 0 .7rem;padding-left:1.2rem">
+      <li>Set the date you start in <b>Settings › Schedule</b>. Terms and due dates are planned from it.</li>
+      <li>When you begin a course, tap <b>Start</b> on it. Its due dates count from that day.</li>
+      <li>Tap a course to see its books, reference course, and assignments. Save each assignment as a PDF where you keep your files, make the link public, and paste it in the app.</li>
+      <li>Under <b>Courses</b>, the catalog lists the courses you can choose beyond the fixed ones.</li>
+      <li>Add your name in <b>Settings › Profile</b>.</li>
+      <li>When the mark at the top turns into an orange dot, tap it to save your configuration file, and keep the file somewhere safe. It is your backup.</li>
+      <li>At the end, publish your diploma and paste its link in <b>Settings › Verification page</b>; then download the page and publish it.</li>
+    </ol>
+    <div class="row"><button class="btn primary" data-act="introDone">Got it</button><button class="btn" data-act="guide">Open the Guide</button></div></section>`;
+  return `${intro}
+  <section class="panel">
+    <div class="spread"><h2>${parse(t).toLocaleDateString("en-US",{weekday:"long",day:"numeric",month:"long"})}</h2><span class="small muted">${hfmt(wk)}${total?` of ${hfmt(total)}`:""} h this week</span></div>
+    ${p?.done?`<div class="row"><span class="chip done">✓ ${hfmt(num(p.hours,0))} h today</span><button class="btn sm" data-act="unpunch">Undo</button></div>`
+      :`<div class="row" style="flex-wrap:nowrap"><input id="punchH" class="hin" type="number" min="0" step="0.5" placeholder="Hours today" aria-label="Hours studied today"><button class="btn primary" data-act="punch">Log</button></div>`}
+    ${ap.length?`<div style="margin-top:.6rem">${ap.map(it=>`<div class="line small">${it.kind==="appt"?`<b>${it.time?esc(it.time)+" ":""}${esc(it.title)}</b>`:esc(it.text)}</div>`).join("")}</div>`:""}
+  </section>
+  <section class="panel">
+    <div class="spread"><h3>${cur?esc(cur.name):"In progress"}</h3>${cur?`<span class="small muted">${mon(cur.start)} – ${mon(cur.end)}</span>`:""}</div>
+    ${active.map(c=>{ const n=need.find(x=>x.c.id===c.id); return card(c,true,n?`${hfmt(n.h)} h/wk`:""); }).join("")}
+    ${curPlanned.map(c=>card(c,false,"",true)).join("")}
+    ${!active.length&&!curPlanned.length?`<p class="empty">No courses in progress.</p>`:""}
+  </section>
+  <section class="panel">
+    <div class="spread"><h3>Progress</h3><span class="small muted">${rs.done} of ${rs.minT} · ${pct}%</span></div>
+    <div class="bar" role="img" aria-label="${pct}% completed"><span style="width:${pct}%"></span></div>
+    <p class="small muted" style="margin:.3rem 0 .6rem">Fixed ${rs.obDone}/${rs.obTot} · electives ${Math.min(rs.elDone,rs.minE)}/${rs.minE} · free ${Math.min(rs.freeDone,rs.minF)}/${rs.minF} · seminars ${Math.min(rs.semDone,rs.minS)}/${rs.minS} · ${doneH.toLocaleString("en-US")} h${f.plan?` · finishing ${mon(f.plan)}`:""}</p>
+    <div class="mosaic">${all.map(c=>{const lv=topLv(alertsFor(c));return `<button class="tile" data-open="${c.id}" data-st="${c.status}" ${lv?`data-al="${lv}"`:""} aria-label="${esc(cname(c)+", "+STATUS[c.status].label)}">${(()=>{ const [p,n]=String(ccode(c)).split(" "); return n?`<small>${esc(p[0])}</small>${esc(n)}`:esc(p); })()}</button>`;}).join("")}</div>
+    <div class="wchart" aria-label="Hours per week over the last 8 weeks">${weeks.map(x=>`<div class="wcol" title="${dm(x.w0)}: ${hfmt(x.h)} h"><span style="height:calc((100% - 1.1rem) * ${(x.h/max).toFixed(3)})"></span><small>${dm(x.w0)}</small></div>`).join("")}${total?`<div class="wneed" style="bottom:calc((100% - 1.1rem) * ${(total/max).toFixed(3)} + 1.1rem)" title="Expected: ${hfmt(total)} h"></div>`:""}</div>
+  </section>`;
+}
+let NEWC=false, ORG=false;
+function viewGrade(){
+  const sems=semsArr(); const pass=c=>FILTER==="all"||c.status===FILTER; const all=coursesArr();
+  const un=all.filter(c=>!c.semesterId && c.chosen!==false); const per=S.settings.perSemester; const cat=all.filter(c=>c.chosen===false); const rs=reqStatus();
+  const cnt=st=>all.filter(c=>st==="all"||c.status===st).length;
+  const filt=[["all","All"],["planned","Planned"],["active","In progress"],["done","Completed"]];
+  const years={}; for(const x of sems) (years[x.year]=years[x.year]||[]).push(x);
+  const semHTML=sem=>{ const shown=inSem(sem.id).filter(pass); if(FILTER!=="all" && !shown.length) return "";
+    return `<div class="sem"><div class="spread"><h4>${esc(sem.name)}</h4><span class="small muted">${mon(sem.start)} – ${mon(sem.end)}</span></div>${shown.map(c=>card(c)).join("")||`<p class="empty">Empty.</p>`}</div>`; };
+  const semOpts=sel=>`<option value="">No term</option>${sems.map(x=>`<option value="${x.id}" ${x.id===sel?"selected":""}>${esc(x.name)}</option>`).join("")}`;
+  return `<div class="spread"><h2>Courses</h2><button class="btn" data-act="toggleOrg" aria-expanded="${ORG}">Organize</button></div>
+  ${ORG?`<section class="panel">
+    <div class="filters" role="group" aria-label="Mostrar">${filt.map(([k,l])=>`<button class="btn sm" data-filter="${k}" aria-pressed="${FILTER===k}">${l} (${cnt(k)})</button>`).join("")}</div>
+    <div class="row"><button class="btn" data-act="toggleNew" aria-expanded="${NEWC}">New course</button><button class="btn" data-act="reflow">Rearrange</button></div>
+    ${NEWC?`<div class="grid2" style="margin-top:.7rem">
+      <label class="f">Name<input id="ncName"></label>
+      <label class="f">Position<input id="ncPos" type="number" min="1" max="${all.length+1}" value="${all.length+1}"></label>
+      <label class="f">Term<select id="ncSem">${semOpts(sems.at(-1)?.id)}</select></label>
+      <label class="f">Type<select id="ncKind">${Object.entries(KIND).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label></div>
+      <div style="margin-top:.5rem;display:grid;gap:.3rem" class="small">
+      <label class="row" style="gap:.4rem"><input type="radio" name="ncMode" value="keep" checked> Place in this term</label>
+      <label class="row" style="gap:.4rem"><input type="radio" name="ncMode" value="reflow"> Rearrange with ${per} per term</label></div>
+      <div class="row" style="margin-top:.5rem;justify-content:flex-end"><button class="btn primary" data-act="createCourse">Add</button></div>`:""}
+    <div class="row" style="margin-top:.7rem;flex-wrap:nowrap"><input id="semPos" class="hin" type="number" min="1" max="${sems.length+1}" value="${sems.length+1}" aria-label="Term number" style="max-width:5rem"><button class="btn" data-act="addSem">Add term</button><button class="btn danger" data-act="delSem">Delete</button></div>
+  </section>`:""}
+  ${Object.entries(years).map(([y,list])=>{ const inner=list.map(semHTML).join(""); return inner?`<section class="panel"><h3>Year ${y}</h3>${inner}</section>`:""; }).join("")}
+  ${un.filter(pass).length?`<section class="panel"><h3>No term</h3>${un.filter(pass).map(c=>card(c)).join("")}</section>`:""}
+  ${cat.length?`<section class="panel"><h3 style="margin-bottom:.15rem">Course catalog</h3>
+    <p class="small muted" style="margin:0 0 .5rem">Planned: electives ${Math.min(rs.elCh,rs.minE)}/${rs.minE} · free ${Math.min(rs.freeCh,rs.minF)}/${rs.minF} (any course) · seminars ${Math.min(rs.semChosen,rs.minS)}/${rs.minS}</p>
+    ${[...cat].sort((a,b)=>{ const k=c=>{ const [p,n]=String(c.code||"").split(" "); return [({MATH:0,CS:1,PHYS:2}[p]??3),+n||c.num]; }; const x=k(a),y=k(b); return x[0]-y[0]||x[1]-y[1]; }).map(c=>card(c)).join("")}</section>`:""}`;
+}
+function calItems(){
+  const m={}; const add=(d,x)=>{(m[d]=m[d]||[]).push(x);};
+  for(const c of coursesArr()) for(const l of c.lists){ const due=delivered(l)?l.deliveredAt:dueOf(c,l); if(!due) continue; const d=daysUntil(due); add(due,{kind:"list",lv:delivered(l)?"ok":d<0?"late":d<=7?"soon":"active",c,l}); }
+  for(const [d,p] of Object.entries(S.punches)) if(p.done) add(d,{kind:"punch",p});
+  for(const sem of semsArr()){ add(sem.start,{kind:"semStart",sem}); add(sem.end,{kind:"semEnd",sem}); }
+  for(const it of Object.values(S.agenda)) add(it.date,{kind:it.kind,it});
+  return m;
+}
+let ADD_KIND="note", EDIT_ID=null;
+function dayItemHTML(x){
+  const row=(dot,body,acts="")=>`<div class="item"><div class="alert" style="padding:0">${dot}${body}</div>${acts?`<div class="acts">${acts}</div>`:""}</div>`;
+  if(x.kind==="list") return row(`<span class="dot ${x.lv==="active"?"":x.lv}" ${x.lv==="active"?'style="background:var(--st-active)"':""}></span>`,`<span>Due: ${esc(cname(x.c))}, ${esc(x.l.label)}${delivered(x.l)?" (submitted)":""}</span>`,`<button class="btn sm" data-open="${x.c.id}">Abrir</button>`);
+  if(x.kind==="punch") return row(`<span class="dot ok"></span>`,`<span>Study logged: ${num(x.p.hours,0)} h</span>`);
+  if(x.kind==="semStart"||x.kind==="semEnd") return row(`<span class="dot" style="background:var(--st-planned)"></span>`,`<span>${x.kind==="semStart"?"Start":"End"} of ${esc(x.sem.name)}</span>`);
+  const it=x.it; const c=it.courseId&&S.courses[it.courseId]; const lab=c?cname(c):it.courseLabel;
+  const body=it.kind==="appt"?`<span><b>${it.time?esc(it.time)+" ":""}${esc(it.title)}</b>${lab?` <span class="muted small">(${esc(lab)})</span>`:""}</span>`:`<span style="white-space:pre-wrap">${esc(it.text)}</span>`;
+  return row(`<span class="dot" style="background:${it.kind==="appt"?"var(--ink)":"var(--muted)"}"></span>`,body,`<button class="btn sm" data-edit="${it.id}">Edit</button><button class="btn sm danger" data-delitem="${it.id}">Delete</button>`);
+}
+function viewAgenda(){
+  const items=calItems(); const first=new Date(CAL.y,CAL.m,1); const gridStart=iso(new Date(CAL.y,CAL.m,1-first.getDay()));
+  const color={late:"var(--al-late)",soon:"var(--al-soon)",ok:"var(--st-done)",active:"var(--st-active)"};
+  let cells="";
+  for(let i=0;i<42;i++){ const d=addDays(gridStart,i); const dd=parse(d); const its=items[d]||[];
+    const dots=its.map(x=>x.kind==="note"?`<span class="note" style="background:var(--muted)"></span>`:`<span style="background:${x.kind==="list"?color[x.lv]:x.kind==="punch"?"var(--st-done)":x.kind==="appt"?"var(--ink)":"var(--st-planned)"}"></span>`).join("");
+    cells+=`<button data-day="${d}" class="${dd.getMonth()!==CAL.m?"out":""} ${d===today()?"today":""} ${d===CAL.sel?"sel":""}" aria-label="${fmt(d)}, ${its.length} item(ns)" aria-pressed="${d===CAL.sel}"><span>${dd.getDate()}</span><span class="dots">${dots}</span></button>`; }
+  const ord={appt:0,list:1,note:2,punch:3,semStart:4,semEnd:4};
+  const sel=(items[CAL.sel]||[]).slice().sort((a,b)=>a.kind==="appt"&&b.kind==="appt"?(a.it.time||"99").localeCompare(b.it.time||"99"):ord[a.kind]-ord[b.kind]);
+  const ed=EDIT_ID&&S.agenda[EDIT_ID]; const kind=ed?ed.kind:ADD_KIND;
+  const form=kind==="note"?`<label class="f">Note<textarea id="agText" rows="3">${esc(ed?.text||"")}</textarea></label>`
+    :`<div class="grid2"><label class="f">Event<input id="agTitle" value="${esc(ed?.title||"")}" placeholder="E.g., extra analysis session"></label>
+      <label class="f">Time (optional)<input id="agTime" type="time" value="${esc(ed?.time||"")}"></label>
+      <label class="f">Course (optional)<select id="agCourse"><option value="">None</option>${chosenArr().map(c=>`<option value="${c.id}" ${ed?.courseId===c.id?"selected":""}>${esc(cname(c))}</option>`).join("")}</select></label></div>`;
+  return `<div class="spread"><h2>Calendar</h2><div class="row"><button class="btn sm" data-cal="-1" aria-label="Previous month">‹</button><b>${first.toLocaleDateString("en-US",{month:"long",year:"numeric"})}</b><button class="btn sm" data-cal="1" aria-label="Next month">›</button><button class="btn sm" data-cal="0">Today</button></div></div>
+  <section class="panel"><div class="cal">${["S","M","T","W","T","F","S"].map(x=>`<div class="h">${x}</div>`).join("")}${cells}</div>
+  <div class="legend" style="margin-top:.6rem"><span><i style="background:var(--ink)"></i>Event</span><span><i style="background:var(--muted);height:3px;width:12px"></i>Note</span><span><i style="background:var(--st-active)"></i>Due</span><span><i style="background:var(--al-soon)"></i>Within 7 days</span><span><i style="background:var(--al-late)"></i>Overdue</span><span><i style="background:var(--st-done)"></i>Submitted or study logged</span><span><i style="background:var(--st-planned)"></i>Term</span></div></section>
+  <section class="panel" id="dayPanel"><h3>${parse(CAL.sel).toLocaleDateString("en-US",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}</h3>
+    ${sel.length?`<div style="margin:.5rem 0 1rem">${sel.map(dayItemHTML).join("")}</div>`:`<p class="empty">Nothing on this day.</p>`}
+    <div class="spread" style="margin-bottom:.6rem"><b>${ed?"Edit":"Add"}</b>${ed?"":`<div class="seg" role="group" aria-label="Type"><button data-kind="note" aria-pressed="${kind==="note"}">Note</button><button data-kind="appt" aria-pressed="${kind==="appt"}">Event</button></div>`}</div>
+    ${form}
+    <div class="row" style="margin-top:.6rem;justify-content:flex-end">${ed?`<button class="btn" data-act="cancelEdit">Cancel</button>`:""}<button class="btn primary" data-act="saveItem">${ed?"Save changes":kind==="note"?"Save note":"Save event"}</button></div>
+  </section>`;
+}
+
+function viewHist(){
+  const cs=chosenArr(); const done=cs.filter(c=>c.status==="done"); const rs=reqStatus();
+  const totH=Math.max(cs.reduce((t,c)=>t+num(c.hours,0),0), num(S.settings.minTotal,0)*DEFAULT_HOURS), doneH=done.reduce((t,c)=>t+num(c.hours,0),0); const f=forecast();
+  const concl=c=>c.lists.map(l=>l.deliveredAt).filter(Boolean).sort().pop()||"";
+  return `<h2>Transcript</h2>${profileLine()}<p class="small muted" style="margin:0 0 .8rem">${esc(S.meta.title)}${S.meta.basedOn?`, inspired by ${esc(S.meta.basedOn)}`:""}</p>
+  <section class="panel stats">
+    <div><div class="big">${rs.done}/${rs.minT}</div><div class="small muted">courses completed</div></div>
+    <div><div class="big">${rs.obDone}/${rs.obTot}</div><div class="small muted">fixed courses</div></div>
+    <div><div class="big">${Math.min(rs.elDone,rs.minE)}/${rs.minE}</div><div class="small muted">electives</div></div>
+    <div><div class="big">${Math.min(rs.freeDone,rs.minF)}/${rs.minF}</div><div class="small muted">free electives</div></div>
+    <div><div class="big">${rs.semDone}/${rs.minS}</div><div class="small muted">seminars</div></div>
+    <div><div class="big">${doneH.toLocaleString("en-US")}</div><div class="small muted">of ${totH.toLocaleString("en-US")} nominal hours</div></div>
+    ${f.plan?`<div><div class="big">${mon(f.plan)}</div><div class="small muted">expected completion, by the term plan</div></div>`:""}
+  </section>
+  <section class="panel"><h3>Completed courses</h3>
+  ${done.length?`<div class="tw"><table><thead><tr><th>Code</th><th>Course</th><th>Hours</th><th>Completed</th><th>Assignments</th></tr></thead><tbody>
+  ${done.map(c=>`<tr><td>${c.num}</td><td>${esc(c.name)}</td><td>${num(c.hours,0)} h</td><td>${fmt(concl(c))}</td><td class="row">${c.lists.map(l=>l.link?`<a class="btn sm" href="${esc(l.link)}" target="_blank" rel="noopener">${esc(l.label)}</a>`:"").join("")}</td></tr>`).join("")}
+  </tbody></table></div>`:`<p class="empty">No completed courses yet.</p>`}</section>`;
+}
+
+function viewAjustes(){
+  const st=S.settings, m=S.meta, pf=G.profile||{};
+  return `<h2>Settings</h2>
+  ${sec("aj-perfil","Profile",`<div class="grid2">
+    <label class="f">Name<input data-profile="name" value="${esc(pf.name)}"></label>
+    <label class="f">Link<input type="url" data-profile="link" value="${esc(pf.link)}" placeholder="https://"></label>
+    <label class="f">Link text<input data-profile="linkLabel" value="${esc(pf.linkLabel)}"></label></div>
+    <label class="f" style="margin-top:.6rem">About you<textarea rows="2" data-profile="bio">${esc(pf.bio)}</textarea></label>`,"panel")}
+  ${sec("aj-cursos","Programs",`${(()=>{ const mine=new Set(progList().map(p=>p.title)); const av=(AVAIL||[]).map((p,i)=>[p,i]).filter(([p])=>!mine.has(p.title));
+      return av.length?`<p class="small muted" style="margin:0 0 .3rem">Available programs</p>${av.map(([p,i])=>`<div class="item"><div>${esc(p.title)}</div><div class="acts"><button class="btn sm primary" data-avail="${i}">Start</button>${p.handbook?`<a class="btn sm" href="${esc(p.handbook)}" target="_blank" rel="noopener">Handbook</a>`:""}</div></div>`).join("")}<p class="small muted" style="margin:.7rem 0 .3rem">Your programs</p>`:""; })()}${progList().map(p=>`<div class="item"><div>${esc(p.title)}${p.id===PROGS.active?` <span class="chip active">in use</span>`:""}</div><div class="acts">${p.id===PROGS.active?"":`<button class="btn sm" data-useprog="${p.id}">Use</button>`}<button class="btn sm danger" data-delprog="${p.id}">Delete</button></div></div>`).join("")}
+    <div class="row" style="margin-top:.6rem"><button class="btn" data-act="importFile">Load file</button><button class="btn" data-act="exportCourse">Export this program</button><button class="btn" data-act="csvTemplate">CSV template</button></div>
+    <div class="row" style="margin-top:.5rem;flex-wrap:nowrap"><input id="importUrl" class="hin" type="url" placeholder="Link to a program file" aria-label="Link to a program file" style="flex:1;max-width:none"><button class="btn" data-act="importUrl">Load</button></div>`,"panel")}
+  ${sec("aj-dados","Program details",`<div class="grid2">
+    <label class="f">Name<input data-meta="title" value="${esc(m.title)}"></label>
+    <label class="f">Inspired by<input data-meta="basedOn" value="${esc(m.basedOn)}"></label>
+    <label class="f">Compiled by<input data-meta="author" value="${esc(m.author)}"></label>
+    <label class="f">Version<input data-meta="version" value="${esc(m.version)}"></label></div>
+    <label class="f" style="margin-top:.6rem">Description<textarea rows="2" data-meta="description">${esc(m.description)}</textarea></label>
+    ${m.handbookUrl?`<div class="row" style="margin-top:.6rem"><a class="btn" href="${esc(m.handbookUrl)}" target="_blank" rel="noopener">Handbook</a></div>`:""}`,"panel")}
+  ${sec("aj-cal","Schedule",`<div class="grid2">
+    <label class="f">Program start<input type="date" data-setdate="courseStart" value="${st.courseStart}"></label>
+    <label class="f">Months per term<input type="number" min="1" max="12" data-set="semMonths" value="${st.semMonths}"></label>
+    <label class="f">Terms per year<input type="number" min="1" max="12" data-set="perYear" value="${st.perYear}"></label>
+    <label class="f">Courses per term<input type="number" min="1" data-set="perSemester" value="${st.perSemester}"></label>
+    <label class="f">Courses required (at least ${STANDARD.courses})<input type="number" min="${STANDARD.courses}" data-set="minTotal" value="${st.minTotal||STANDARD.courses}"></label>
+    <label class="f">Electives required (at least ${STANDARD.electives})<input type="number" min="${STANDARD.electives}" data-set="minElet" value="${st.minElet||STANDARD.electives}"></label>
+    <label class="f">Seminars required (at least ${STANDARD.seminars})<input type="number" min="${STANDARD.seminars}" data-set="minSem" value="${st.minSem??STANDARD.seminars}"></label></div>
+    <p class="small muted" id="calSummary" aria-live="polite"></p>`,"panel")}
+  ${sec("aj-verify","Verification page",`<p class="small" style="margin:0 0 .6rem">The app builds this page as a file. You publish it yourself on any web host (GitHub Pages, for example), and every link on it must be public.</p>
+    <div class="grid2">
+    <label class="f">Program handbook link<input type="url" data-meta="handbookUrl" value="${esc(m.handbookUrl)}" placeholder="https://"></label>
+    <label class="f">Diploma link<input type="url" data-meta="diplomaUrl" value="${esc(m.diplomaUrl)}" placeholder="https://"><span class="small muted">You create and publish your diploma; paste its public link here.</span></label>
+    <label class="f">License<select data-meta="license"><option value="" ${m.license!=="none"?"selected":""}>CC BY-NC-SA 4.0</option><option value="none" ${m.license==="none"?"selected":""}>None</option></select></label></div>
+    <div class="row" style="margin-top:.6rem"><button class="btn" data-act="verifyPreview">Preview</button><button class="btn primary" data-act="verifyDownload">Download page (.html)</button></div>`,"panel")}
+  ${sec("aj-backup","Configuration and reminders",`<p class="small muted">${G.lastExport?`Configuration saved on ${fmt(G.lastExport.slice(0,10))}${G.dirty?"; there are changes since then":""}.`:"Configuration not saved yet."}</p>
+    <div class="row"><button class="btn primary" data-act="backup">Save configuration</button><button class="btn" data-act="restore">Load configuration</button><button class="btn" data-act="ics">Export dates (.ics)</button></div>
+    <p class="small muted" id="usage"></p>`,"panel")}
+  ${sec("aj-aparelho","Device",`<div class="row" style="margin-bottom:.8rem"><span>Appearance</span><div class="seg" role="group" aria-label="Appearance">${[["system","System"],["light","Light"],["dark","Dark"]].map(([k,l])=>`<button data-theme-set="${k}" aria-pressed="${getTheme()===k}">${l}</button>`).join("")}</div></div><p class="small muted">Version ${APP_VERSION}</p><button class="btn danger" data-act="wipe">Erase all data</button>`,"panel")}`;
+}
+
+/* ---------- Course dialog ---------- */
+let OPEN_COURSE=null, EDIT_BOOK=null;
+function openCourse(id){ OPEN_COURSE=id; EDIT_BOOK=null; renderCourseDialog(id); const d=$("#dlg"); if(!d.open) d.showModal(); }
+function refsHTML(c){
+  const avail=Object.values(S.books).filter(b=>!c.refs.some(r=>r.bookId===b.id)).sort((a,b)=>(a.authors||a.title).localeCompare(b.authors||b.title));
+  return `${c.refs.map((r,i)=>{ const b=S.books[r.bookId]; if(!b) return ""; const others=usedBy(b.id).filter(x=>x.id!==c.id).map(x=>ccode(x)); const ed=EDIT_BOOK===b.id;
+    return `<div class="refrow">
+      <div class="spread"><span><b>${shortBook(b)}</b> <span class="muted small">${r.role==="principal"?"principal":"complementar"}</span></span>
+        <span class="row">${b.link?`<a class="btn sm" href="${esc(b.link)}" target="_blank" rel="noopener">File</a>`:`<button class="btn sm" data-linkbook="${b.id}">File link</button>`}<button class="btn sm" data-bookedit="${b.id}" aria-expanded="${ed}" aria-label="More options">⋯</button></span></div>
+      <input class="hin" data-refch="${i}" value="${esc(r.chapters)}" placeholder="Chapters" aria-label="Chapters used" style="max-width:100%;margin-top:.3rem">
+      ${ed?`<div class="secb"><p class="cite">${cite(b)}${b.url?` <a href="${esc(b.url)}" target="_blank" rel="noopener">Link</a>`:""}</p>
+        ${others.length?`<p class="small muted">Also used in ${others.join(", ")}.</p>`:""}
+        <div class="grid2">${[["authors","Authors"],["title","Title"],["edition","Edition"],["publisher","Publisher"],["year","Year"],["link","File link"],["url","Book website"]].map(([k,l])=>`<label class="f">${l}<input data-bf="${b.id}|${k}" value="${esc(b[k])}"></label>`).join("")}
+          <label class="f">Papel<select data-refrole="${i}">${Object.entries(ROLE).map(([k,v])=>`<option value="${k}" ${k===r.role?"selected":""}>${v}</option>`).join("")}</select></label></div>
+        <div class="row" style="margin-top:.5rem"><button class="btn sm danger" data-refdel="${i}">Remove from this course</button></div></div>`:""}
+    </div>`;}).join("")}
+  <div class="row" style="margin-top:.5rem;flex-wrap:nowrap"><select id="addBook" class="btn" style="flex:1;min-width:0"><option value="">Add a book</option>${avail.map(b=>`<option value="${b.id}">${shortBook(b)}</option>`).join("")}</select>
+    <input type="hidden" id="addRole" value="complementar"><button class="btn sm" data-act="addRef">OK</button><button class="btn sm" data-act="newBook">New</button></div>`;
+}
+function renderCourseDialog(id){
+  const c=S.courses[id]; const d=$("#dlg"); if(!c){ d.close(); OPEN_COURSE=null; return; }
+  const a=alertsFor(c); const sems=semsArr(); const others=coursesArr().filter(x=>x.id!==id);
+  const scroll=d.querySelector(".db")?.scrollTop||0; const w=sched().course[c.id];
+  d.innerHTML=`<div class="dh"><h2 style="margin:0">${esc(cname(c))}</h2><button class="btn sm" data-act="close" aria-label="Close">✕</button></div>
+  <div class="db">
+    ${roleHTML(c)}
+    ${a.length?`<div style="margin-bottom:.6rem">${a.sort((x,y)=>LV[y.lv].rank-LV[x.lv].rank).map(x=>`<div class="alert"><span class="dot ${x.lv}"></span><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}
+    <div class="row" style="flex-wrap:nowrap"><select data-cf="status" class="btn" aria-label="Status">${ST_ORDER.map(s=>`<option value="${s}" ${s===c.status?"selected":""}>${STATUS[s].label}</option>`).join("")}</select>
+      ${listsDone(c)===c.lists.length && c.status!=="done"?`<button class="btn primary" data-status="done">Complete</button>`:""}
+      ${c.kind!=="obrig"?(c.chosen===false?addAsHTML(c):c.status==="planned"?`<button class="btn sm" data-unchoose="${c.id}">Remove from plan</button>`:""):""}
+      <span class="small muted">${w?.start?`${mon(w.start)} – ${mon(c.status==="done"?w.end:w.nomEnd)}`:""}</span></div>
+    <h3 style="margin:1rem 0 .4rem">Assignments</h3>
+    ${c.lists.map(l=>`<div class="spread line"><span>${esc(l.label)} <span class="muted small">${delivered(l)?`✓ ${dm(l.deliveredAt)}`:dm(dueOf(c,l)||"")}</span></span>
+      <span class="row">${l.link?`<a class="btn sm" href="${esc(l.link)}" target="_blank" rel="noopener">Open</a><button class="btn sm" data-linklist="${c.id}|${l.key}" aria-label="Change link">✎</button><button class="btn sm" data-unattach="${c.id}|${l.key}" aria-label="Undo submission">✕</button>`
+        :`<button class="btn sm primary" data-linklist="${c.id}|${l.key}">Paste link</button>`}</span></div>`).join("")}
+    ${sec("dlg-biblio",`Books (${c.refs.length})`,refsHTML(c))}
+    ${sec("dlg-dados","Details",`<div class="grid2">
+      <label class="f">Name<input data-cf="name" value="${esc(c.name)}"></label>
+      ${(c.roles||[]).length>1?"":`<label class="f">Type<select data-cf="kind">${Object.entries(KIND).map(([k,v])=>`<option value="${k}" ${k===(c.kind||"obrig")?"selected":""}>${v}</option>`).join("")}</select></label>`}
+      <label class="f">Term<select data-cf="semesterId"><option value="">No term</option>${sems.map(s=>`<option value="${s.id}" ${s.id===c.semesterId?"selected":""}>${esc(s.name)}</option>`).join("")}</select></label>
+      <label class="f">Position in the catalog<input type="number" min="1" max="${coursesArr().length}" data-cf="num" value="${c.num}"></label>
+      <label class="f">Hours<input type="number" min="0" step="1" data-cf="hours" value="${c.hours}"></label>
+      <label class="f">Reference course<input data-cf="refLabel" value="${esc(c.refLabel)}"></label>
+      <label class="f">Link<input type="url" data-cf="refUrl" value="${esc(c.refUrl)}" placeholder="https://"></label></div>
+      ${c.refUrl?`<p><a class="btn sm" href="${esc(c.refUrl)}" target="_blank" rel="noopener">Open reference course</a></p>`:""}
+      <div class="grid2" style="margin-top:.6rem">${c.lists.filter(l=>!SEM_DEF.some(d=>d.key===l.key)).map(l=>`<label class="f">${esc(l.label)}<span class="muted">: problems and source</span><span class="row" style="flex-wrap:nowrap"><input type="number" min="1" data-lf="${l.key}|questions" value="${l.questions}" style="max-width:5rem"><select data-lf="${l.key}|origin">${ORIGINS.map(o=>`<option ${o===l.origin?"selected":""}>${o}</option>`).join("")}</select></span></label>`).join("")}</div>
+      <label class="f" style="margin-top:.6rem">Notes<textarea rows="2" data-cf="notes">${esc(c.notes)}</textarea></label>
+      <div class="row" style="margin-top:.8rem;justify-content:flex-end"><button class="btn danger" data-act="delCourse">Delete course</button></div>`)}
+    ${sec("dlg-pre",`Prerequisites (${c.prereq.length})`,`<div class="prq">${others.map(o=>`<label><input type="checkbox" data-pre="${o.id}" ${c.prereq.includes(o.id)?"checked":""}> ${esc(cname(o))}</label>`).join("")}</div>
+      <label class="f" style="max-width:16rem">Recommended after N completed<input type="number" min="0" data-cf="minDone" value="${c.minDone||0}"></label>`)}
+  </div>`;
+  const db=d.querySelector(".db"); if(db) db.scrollTop=scroll;
+}
+
+/* ---------- Guide ---------- */
+function openGuide(){
+  const d=$("#dlg"); OPEN_COURSE=null;
+  d.innerHTML=`<div class="dh"><h2 style="margin:0">Guide</h2><button class="btn sm" data-act="close">Close</button></div>
+  <div class="db guide">
+  <p>Self-Taught University helps you follow a complete undergraduate program on your own and keep the record that proves it. It provides no lessons, problems, or grades: you study from each course's books and reference course, put together your problem sets from those sources, solve and check them, and keep the files. The app plans your courses across terms, keeps a minimum protocol for every course, records your work and study hours, and builds your transcript. Everything stays on this device.</p>
+
+  <h3>What you do, and what the app does</h3>
+  ${YOUR_PART}
+
+  <h3>Programs</h3>
+  <p>A program is a file that describes a degree: its courses, books, prerequisites, and what it takes to complete it. Start one from the list on the first screen, or load your own from a file or a link. You can follow several programs and switch between them at the top of the screen or in Settings › Programs.</p>
+
+  <h3>Minimum structure</h3>
+  <p>Every program has the same minimum structure, and the app keeps it that way:</p>
+  <ul>
+    <li><b>${STANDARD.core} fixed courses</b>, set by the program's author. You do not choose them, and they cannot be removed.</li>
+    <li><b>${STANDARD.electives} electives</b>, which you choose from the program's catalog of electives.</li>
+    <li><b>Free electives</b> to reach ${STANDARD.courses} courses: any course in the catalog, counted as a free elective.</li>
+    <li><b>${STANDARD.seminars} seminars</b>: courses that allow it can be taken as a seminar (presentation and paper) and still count as an elective or free elective.</li>
+    <li>Every course carries at least ${STANDARD.hours} hours and has a code, a name, and a primary textbook (courses that can be seminars choose their texts by topic).</li>
+  </ul>
+  <p>Once a program has started, you can add courses, remove courses, and change their details, as long as these minimums still hold. A program file that does not meet them is not accepted, and the app lists what is missing.</p>
+
+  <h3>The top bar</h3>
+  <ul>
+    <li><b>Self-Taught University</b>, and below it the program in use (a list, if you have more than one).</li>
+    <li><b>✓ or orange dot</b>: ✓ means your configuration file is up to date; an orange dot means there are changes you have not saved to it. Tap it to save.</li>
+    <li><b>Guide</b>: this page.</li>
+  </ul>
+
+  <h3>Today</h3>
+  <ul>
+    <li><b>Hours</b>: enter the hours you studied today and tap <b>Log</b>. Next to the date you see this week's total and the hours your courses in progress require.</li>
+    <li><b>Current term</b>: the courses in progress, already open, with their assignments, books, and links; courses planned for this term have a <b>Start</b> button.</li>
+    <li><b>Progress</b>: courses completed against those required, the fixed, elective, and seminar counts, a mosaic of all your courses (tap one to open it), and a chart of your weekly hours, with a dashed line for the hours required.</li>
+  </ul>
+
+  <h3>Courses</h3>
+  <ul>
+    <li>Your plan by year and term, with each term's dates. Tap a course to see its details; tap <b>Edit</b> to change them.</li>
+    <li><b>Course catalog</b>, at the bottom: the courses you can add, with what you have planned so far. Each course shows the ways you can take it (<b>Elective</b>, <b>Free elective</b>, <b>Seminar</b>) while that group still has room; tap one to place the course in the next term with an open slot, after its prerequisites.</li>
+    <li><b>Organize</b>: show only courses with a given status, create a course, <b>Rearrange</b> the planned courses, and add or delete a term by its number (the following terms are renumbered).</li>
+  </ul>
+
+  <h3>The parts of a course</h3>
+  <ul>
+    <li><b>Code and name</b>, for example MATH 101 Single Variable Calculus.</li>
+    <li><b>Type</b>: fixed, elective, or free elective, and some courses can be taken as a seminar. You decide how a course counts when you add it from the catalog, and you can change it later by opening the course ("Count as elective", "Count as free elective", "Take as a seminar"). Each option disappears once its group is complete.</li>
+    <li><b>Hours</b>: the nominal workload, at least ${STANDARD.hours}, shown in your transcript.</li>
+    <li><b>Prerequisites</b>: courses to complete first. Starting a course early is allowed, but it is flagged.</li>
+    <li><b>Books</b>: the primary and supplementary texts, with the chapters used. Under ⋯ you can add a link to your own copy of the book and edit its details, which then apply to every course that uses that book.</li>
+    <li><b>Reference course</b>: a link to a university course (lectures, notes, problem sets) to guide your pace.</li>
+    <li><b>Assignments</b>: four problem sets and a cumulative review, which you prepare from the course's books and reference course, solve, and check; in a course taken as a seminar, a recorded presentation and a paper. The app sets their due dates and records the links to your files.</li>
+    <li><b>Status</b>: planned, in progress, or completed.</li>
+  </ul>
+
+  <h3>Assignments and completion</h3>
+  <ul>
+    <li>To submit an assignment, store your PDF wherever you keep your files, share it so that anyone with the link can open it, and paste that public link in the assignment. The app keeps only the link: it does not store, check, or publish the file. Tap a submitted assignment to open it; in the course's Edit window you can change or undo a submission.</li>
+    <li>Due dates fall on Saturdays: problem sets at weeks 4, 8, 12, and 15 of the course and the review at week 16 (seminars: presentation at week 14, paper at week 16), counted from the day you tap <b>Start</b>.</li>
+    <li>When every assignment is submitted, a <b>Complete</b> button appears in the course's Edit window. Completed courses go to your transcript.</li>
+  </ul>
+
+  <h3>Terms and dates</h3>
+  <ul>
+    <li>In the first year, both courses of each term are fixed. From the second year on, each term keeps one slot for a course you choose, so electives and seminars run alongside the fixed courses.</li>
+    <li>Each term starts when the previous one ends, and ends when its courses end. Finish early and later terms move up; fall behind and they move back. Planned courses never start before today.</li>
+    <li>The start date, the length of a term, terms per year, courses per term, and the number of courses and seminars required are in Settings › Schedule. The program file sets their initial values.</li>
+  </ul>
+
+  <h3>Colors</h3>
+  <ul>
+    <li>Gray outline: planned. Blue: in progress. Green: completed, submitted, or study logged.</li>
+    <li>Yellow: needs attention (for example, a prerequisite not completed). Orange: due within 7 days. Red: overdue.</li>
+  </ul>
+
+  <h3>Calendar</h3>
+  <p>A month view with due dates, notes, events, logged study, and the start and end of each term. Tap a date to see what is on it and to add a note or an event, with an optional time and course.</p>
+
+  <h3>Transcript</h3>
+  <p>Courses completed, fixed courses, electives, and seminars completed, nominal hours, the expected completion date, and every completed course with its dates and the links you recorded to your work.</p>
+
+  <h3>Settings</h3>
+  <ul>
+    <li><b>Profile</b>: your name, a link (for example, your website), and a short text about you.</li>
+    <li><b>Programs</b>: the published programs you have not started (the app tells you when a new one appears), your programs to switch or delete, loading a program from a file or a link, exporting the program in use (without your progress), and a CSV template to write your own.</li>
+    <li><b>Program details</b> and <b>Schedule</b>: the program's name, description, and handbook; the start date, length of a term, terms per year, and courses per term; and the courses, electives, and seminars required, which can be raised but not set below the minimum.</li>
+    <li><b>Verification page</b>: the app generates a web page file (.html) with your name, start and finish dates, and every course with the links you pasted. You create your diploma, publish it, and paste its public link here, together with a public link to the program's handbook. Then you download the file and publish it yourself, on any web host (GitHub Pages, for example). The app does not publish anything.</li>
+    <li><b>Configuration and reminders</b>: save or load your configuration file, and export your due dates and events as an .ics file to import into any calendar app.</li>
+    <li><b>Device</b>: light, dark, or system appearance; the app's version; and erasing all data on this device.</li>
+  </ul>
+
+  <h3>Your data</h3>
+  <p>Everything you enter stays in this browser, on this device, and is never sent anywhere. The configuration file is your only backup and the way to move your data to another device: save it from time to time and keep it somewhere safe. Your own files, such as solutions and books, stay wherever you keep them; the app stores only links.</p>
+
+  <h3>Updates</h3>
+  <p>The installed app updates itself when a new version is published; your data stays the same.</p>
+  </div>`;
+  if(!d.open) d.showModal();
+}
+
+/* ---------- Verification page ---------- */
+const ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+const ORD=["First","Second","Third","Fourth","Fifth","Sixth","Seventh","Eighth","Ninth","Tenth"];
+function buildVerificationPage(){
+  const m=S.meta, pf=G.profile||{}, rs=reqStatus(), f=forecast(), sc=sched();
+  const fmtL=s=>s?parse(s).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}):"";
+  const start=S.settings.courseStart;
+  const finish=rs.complete ? chosenArr().map(c=>c.doneAt).filter(Boolean).sort().pop() : "";
+  const years={}; for(const x of semsArr()) (years[x.year]=years[x.year]||[]).push(x);
+  const box=c=>{ const w=sc.course[c.id]||{};
+    const dates=c.status==="done"?`${fmtL(w.start)} – ${fmtL(c.doneAt)}`:c.status==="active"?`Started ${fmtL(w.start)}`:"Planned";
+    const work=c.lists.map(l=>l.link?`<li><a href="${esc(l.link)}" target="_blank" rel="noopener">${esc(l.label)}</a></li>`:`<li class="na">${esc(l.label)}</li>`).join("");
+    return `<details class="c"><summary>${esc(c.name)}</summary><div class="p">
+      <p class="h"><b>${esc(ccode(c))} ${esc(c.name)}</b></p>
+      <p class="m">${esc(KIND[c.kind]||"")} · ${num(c.hours,0)} hours · ${dates}</p>
+      <ul>${work}</ul>
+      ${c.refUrl?`<p class="m">Reference course: <a href="${esc(c.refUrl)}" target="_blank" rel="noopener">${esc(c.refLabel||c.refUrl)}</a></p>`:""}
+    </div></details>`; };
+  const grade=Object.entries(years).map(([y,list])=>{ const terms=list.map(x=>{ const cs=inSem(x.id).filter(c=>c.chosen!==false); return cs.length?`<h3>Term ${ROMAN[x.k-1]||x.k}</h3><div class="g">${cs.map(box).join("")}</div>`:""; }).join("");
+    return terms?`<h2>${ORD[y-1]?ORD[y-1]+" Year":"Year "+y}</h2>${terms}`:""; }).join("");
+  const lic=m.license==="none"?"":`<p class="lic">Work licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.</p>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(UNI)} · ${esc(m.title)}${pf.name?` · ${esc(pf.name)}`:""}</title>
+<style>
+:root{--ink:#202124;--muted:#5f6368;--line:#5f6368}
+*{box-sizing:border-box}body{margin:0;font-family:Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
+main{max-width:1080px;margin:0 auto;padding:48px 24px 64px}
+.logo{display:block;margin:0 auto 24px;max-width:min(560px,100%);height:auto}
+.brand{text-align:center;font:700 2rem/1.2 ui-monospace,Menlo,Consolas,monospace;margin:0 0 40px}
+h1{text-align:center;font-size:1.35rem;margin:0 0 40px}
+.info p{margin:.15rem 0}
+.links{display:flex;justify-content:center;gap:clamp(24px,18vw,240px);margin:40px 0 56px;flex-wrap:wrap}
+.btn,summary{display:block;border:1px solid var(--line);border-radius:4px;padding:6px 16px;text-align:center;color:var(--ink);text-decoration:none;font-size:.9rem;background:#fff;cursor:pointer}
+.links .btn{min-width:150px}
+.btn:hover,summary:hover{background:#f1f3f4}
+h2.gb{font-size:1.9rem;margin:0 0 28px}
+h2{font-size:1.4rem;font-weight:400;margin:36px 0 20px}
+h3{font-size:1.05rem;font-weight:400;margin:24px 0 20px}
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px}
+@media (max-width:820px){.g{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.g{grid-template-columns:1fr}}
+summary{list-style:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}summary::-webkit-details-marker{display:none}
+details[open]{grid-column:1/-1}details[open] summary{background:#f1f3f4}
+.p{border:1px solid #dadce0;border-top:0;border-radius:0 0 4px 4px;padding:12px 16px}
+.p p{margin:.2rem 0}.m{color:var(--muted);font-size:.88rem}.p ul{margin:.5rem 0;padding-left:1.2rem}.na{color:var(--muted)}
+.lic{margin-top:56px;text-align:center;color:var(--muted);font-size:.85rem}
+a{color:#1a73e8}
+</style></head><body><main>
+${/^https?:/.test(location.protocol)?`<img class="logo" src="${esc(new URL("logo.png",location.href).href)}" alt="${esc(UNI)}">`:`<p class="brand">${esc(UNI)}</p>`}
+<h1>${esc(m.title)}</h1>
+<div class="info">
+${pf.name?`<p><b>Student Name:</b> ${esc(pf.name)}${pf.link?` · <a href="${esc(pf.link)}" target="_blank" rel="noopener">${esc(pf.linkLabel||pf.link.replace(/^https?:\/\//,""))}</a>`:""}</p>`:""}
+<p><b>Start Date:</b> ${fmtL(start)}</p>
+<p><b>Finish Date:</b> ${finish?fmtL(finish):"—"}</p>
+</div>
+<div class="links">${m.handbookUrl?`<a class="btn" href="${esc(m.handbookUrl)}" target="_blank" rel="noopener">Curriculum</a>`:""}${m.diplomaUrl?`<a class="btn" href="${esc(m.diplomaUrl)}" target="_blank" rel="noopener">Diploma</a>`:""}</div>
+<h2 class="gb">Gradebook</h2>
+${grade}
+${lic}
+</main></body></html>`;
+}
+
+/* ---------- Configuration file ---------- */
+function download(blob,name){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000); }
+async function backup(){
+  try{
+    const states={}; for(const id of Object.keys(PROGS.list)) states[id]=id===S.id?S:await dbGet("kv",stateKey(id));
+    const {dirty,lastExport,...glob}=G;
+    download(new Blob([JSON.stringify({app:"self-taught-university",kind:"configuration",version:1,created:new Date().toISOString(),programs:PROGS,states,global:glob},null,1)],{type:"application/json"}),"self-taught-university-configuration.json");
+    G.lastExport=new Date().toISOString(); G.dirty=false; await dbPut("kv",G,"global"); render(); renderSave();
+    toast("Configuration saved. Keep the file somewhere safe.");
+  }catch(e){ toast(e.message); }
+}
+async function restore(file){
+  try{
+    const data=JSON.parse(await file.text());
+    if(data?.format===FORMAT) return toast("This file is a program without progress. Use \"Load file\" under Programs.");
+    if(!data?.programs || !data?.states) throw new Error("the file does not contain an app configuration");
+    if(!await ask("Loading the configuration replaces all programs, progress, calendar entries, and the profile on this device with those in the file. Continue?","Load")) return;
+    for(const id of Object.keys(PROGS.list)) await dbDel("kv",stateKey(id));
+    await dbClear("events");
+    const progs=data.programs;
+    for(const [id,st] of Object.entries(data.states)){ const m=normalize(st); m.id=id; await dbPut("kv",m,stateKey(id)); progs.list[id]={id,title:m.meta.title}; }
+    PROGS=progs; G={profile:data.global?.profile||{}, lastExport:data.created||"", dirty:false};
+    await dbPut("kv",PROGS,"programs"); await dbPut("kv",G,"global");
+    await switchProgram(PROGS.active in PROGS.list ? PROGS.active : Object.keys(PROGS.list)[0]); toast("Configuration loaded.");
+  }catch(e){ toast("Could not load: "+e.message); }
+}
+$("#courseIn").addEventListener("change", async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f) return;
+  try{ const t=await f.text(); const data=/\.csv$/i.test(f.name)?csvToData(t,f.name.replace(/\.csv$/i,"")):JSON.parse(t); await importCourse(data); }
+  catch(err){ toast("Could not load: "+err.message); }
+});
+$("#restoreIn").addEventListener("change",e=>{ const f=e.target.files[0]; e.target.value=""; if(f) restore(f); });
+
+function exportICS(){
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Self-Taught University//PT-BR","CALSCALE:GREGORIAN"];
+  const stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,""); const q=t=>String(t).replace(/[,;\\]/g,m=>"\\"+m);
+  let n=0;
+  for(const c of coursesArr()) for(const l of c.lists){
+    const due=dueOf(c,l); if(delivered(l)||!due||c.status==="done") continue; n++;
+    L.push("BEGIN:VEVENT",`UID:${c.id}-${l.key}@self-taught-university`,`DTSTAMP:${stamp}`,`DTSTART;VALUE=DATE:${due.replace(/-/g,"")}`,`DTEND;VALUE=DATE:${addDays(due,1).replace(/-/g,"")}`,
+      `SUMMARY:${q(`Due: ${cname(c)}, ${l.label}`)}`,`DESCRIPTION:${q(`Paste the link to your solutions in the app.`)}`,
+      "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Assignment due tomorrow","TRIGGER:-P1D","END:VALARM","END:VEVENT");
+  }
+  for(const it of Object.values(S.agenda)){
+    if(it.kind!=="appt"||it.date<today()) continue; n++; const d=it.date.replace(/-/g,""); const c=it.courseId&&S.courses[it.courseId];
+    let a,b,tr; if(it.time){ const [h,mi]=it.time.split(":").map(Number); a=`DTSTART:${d}T${pad(h)}${pad(mi)}00`; b=`DTEND:${h+1>=24?addDays(it.date,1).replace(/-/g,""):d}T${pad((h+1)%24)}${pad(mi)}00`; tr="TRIGGER:-PT30M"; }
+    else { a=`DTSTART;VALUE=DATE:${d}`; b=`DTEND;VALUE=DATE:${addDays(it.date,1).replace(/-/g,"")}`; tr="TRIGGER:-P1D"; }
+    L.push("BEGIN:VEVENT",`UID:${it.id}@self-taught-university`,`DTSTAMP:${stamp}`,a,b,`SUMMARY:${q(it.title+(c?` (${c.name})`:""))}`,"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Event",tr,"END:VALARM","END:VEVENT");
+  }
+  L.push("END:VCALENDAR");
+  if(!n) return toast("No pending assignments or upcoming events with dates.");
+  download(new Blob([L.join("\r\n")],{type:"text/calendar"}),`dates_${today()}.ics`); toast(`${n} events exported.`);
+}
+
+/* ---------- Interactions ---------- */
+document.addEventListener("click", async e=>{
+  const b=e.target.closest("button"); if(!b) return; const ds=b.dataset;
+  if(ds.ask!==undefined){ $("#ask").close(ds.ask); return; }
+  if(ds.askl!==undefined){ $("#askl").close(ds.askl); return; }
+  if(ds.tab) return go(ds.tab);
+  if(ds.open) return openCourse(ds.open);
+  if(ds.toggle){ OPEN_CARDS.has(ds.toggle)?OPEN_CARDS.delete(ds.toggle):OPEN_CARDS.add(ds.toggle); return render(); }
+  if(ds.linklist){ const [cid,key]=ds.linklist.split("|"); const l=S.courses[cid].lists.find(x=>x.key===key);
+    const u=await askLink(`Public link to your PDF: ${l.label}`, l.link||"", "Store the file yourself (for example, in Google Drive) and share it so that anyone with the link can open it. The app keeps only the link."); if(u===null) return;
+    if(!u) return toast("Paste a link to submit the assignment.");
+    return dispatch("list.update",{courseId:cid,key,patch:{link:u,deliveredAt:l.deliveredAt||today()}}); }
+  if(ds.linkbook){ const b=S.books[ds.linkbook]; const u=await askLink(`File link: ${b.title}`, b.link||""); if(u===null) return;
+    return dispatch("book.update",{id:b.id,patch:{link:u}}); }
+  if(ds.bookedit){ EDIT_BOOK = EDIT_BOOK===ds.bookedit ? null : ds.bookedit; return renderCourseDialog(OPEN_COURSE); }
+  if(ds.refdel!==undefined){ const c=S.courses[OPEN_COURSE]; const r=c.refs[+ds.refdel]; const bk=S.books[r.bookId];
+    if(!await ask(`Remove "${bk?.title||"this book"}" from this course? The book stays in the library.`,"Remove",true)) return;
+    return dispatch("course.update",{id:c.id,patch:{refs:c.refs.filter((_,i)=>i!==+ds.refdel)}}); }
+  if(ds.unattach){ const [cid,key]=ds.unattach.split("|"); const l=S.courses[cid].lists.find(x=>x.key===key);
+    if(!await ask("Undo this submission? The assignment becomes pending again; the file is not deleted.","Undo",true)) return;
+    return dispatch("list.update",{courseId:cid,key,patch:{link:"",deliveredAt:""}}); }
+  if(ds.setkind){ const [id,k]=ds.setkind.split("|"); const c=S.courses[id]; if(c.lists.some(delivered)) return toast("This course already has submissions.");
+    let patch;
+    if(k==="sem") patch={kind:"sem", base:bucket(c), lists:listsFor("sem")};
+    else if(c.kind==="sem" && k===bucket(c)) patch={kind:k, base:"", lists:listsFor(k)};
+    else if(c.kind==="sem") patch={base:k};
+    else patch={kind:k};
+    await dispatch("course.update",{id,patch}); return toast(k==="sem"?`${ccode(c)} is now taken as a seminar: presentation and paper.`:`${ccode(c)} now counts as ${k==="elet"?"an elective":"a free elective"}.`); }
+  if(ds.themeSet){ try{ localStorage.setItem("stu-theme",ds.themeSet); }catch(e){} applyTheme(ds.themeSet); return render(); }
+  if(ds.avail!==undefined){ const p=AVAIL[+ds.avail];
+    try{ const r=await fetch("programs/"+p.file,{cache:"no-cache"}); if(!r.ok) throw new Error(`the server answered ${r.status}`); const t=await r.text();
+      await importCourse(/\.csv$/i.test(p.file)?csvToData(t,p.title):JSON.parse(t), {handbook:p.handbook?new URL(p.handbook,location.href).href:""}); }
+    catch(err){ toast("Could not load the program: "+err.message); } return; }
+  if(ds.addas || ds.choose){ const [cid,how]=(ds.addas||ds.choose+"|").split("|"); const c=S.courses[cid]; const r0=reqStatus();
+    const base = how==="opt" ? "opt" : how==="elet" ? "elet" : (canElet(c) && (r0.elCh<r0.minE || r0.freeCh>=r0.minF) ? "elet" : "opt");
+    const patch = how==="sem" ? {chosen:true, kind:"sem", base:(canElet(c) && r0.elCh<r0.minE) ? "elet" : "opt", lists:listsFor("sem")} : {chosen:true, kind:base};
+    await dispatch("course.update",{id:c.id,patch});
+    const r=fillPlan(S); if(Object.keys(r.assign).length) await dispatch("plan.fill",{...r,remove:[]});
+    const sm=semById(S.courses[c.id].semesterId); const rq=reqStatus(); const nc=S.courses[c.id];
+    const as = nc.kind==="sem" ? `as a seminar (${rq.semChosen} of ${rq.minS})` : bucket(nc)==="elet" ? `as an elective (${rq.elCh} of ${rq.minE})` : `as a free elective (${rq.freeCh} of ${rq.minF})`;
+    return toast(`${ccode(nc)} added${sm?` to ${sm.name}`:""} ${as}.`); }
+  if(ds.unchoose){ const c=S.courses[ds.unchoose]; if(c.status!=="planned") return toast("Only courses not yet started can be removed.");
+    const home=(c.roles||[c.kind]).find(r=>r!=="sem")||"elet";
+    await dispatch("course.update",{id:c.id,patch:{chosen:false,semesterId:null,kind:home,base:"",lists:c.kind==="sem"?listsFor(home):c.lists}}); return toast(`${c.name} is back in the catalog.`); }
+  if(ds.start) return dispatch("course.update",{id:ds.start,patch:{status:"active"},today:today()});
+  if(ds.status) return dispatch("course.update",{id:OPEN_COURSE,patch:{status:ds.status},today:today()});
+  if(ds.cal!==undefined){ const k=+ds.cal; if(k===0){const t=new Date(); CAL={y:t.getFullYear(),m:t.getMonth(),sel:today()};} else { const d=new Date(CAL.y,CAL.m+k,1); CAL.y=d.getFullYear(); CAL.m=d.getMonth(); } return render(); }
+  if(ds.day){ CAL.sel=ds.day; EDIT_ID=null; render(); $("#dayPanel")?.scrollIntoView({behavior:reduced()?"auto":"smooth",block:"start"}); return; }
+  if(ds.kind){ ADD_KIND=ds.kind; return render(); }
+  if(ds.edit){ EDIT_ID=ds.edit; render(); $("#dayPanel")?.scrollIntoView({block:"end"}); return; }
+  if(ds.delitem){ if(!await ask("Delete this calendar item?","Delete",true)) return; if(EDIT_ID===ds.delitem) EDIT_ID=null; return dispatch("agenda.remove",{id:ds.delitem}); }
+  if(ds.filter){ FILTER=ds.filter; return render(); }
+  if(ds.useprog){ await switchProgram(ds.useprog); return toast(`Usando "${S.meta.title}".`); }
+  if(ds.delprog){ const p=PROGS.list[ds.delprog];
+    if(!await ask(`Delete the program "${p.title}" with all its progress and calendar? Save the configuration first.`,"Delete program",true)) return;
+    await deleteProgram(ds.delprog); return toast("Program deleted."); }
+  switch(ds.act){
+    case "close": $("#dlg").close(); OPEN_COURSE=null; break;
+    case "guide": openGuide(); break;
+    case "punch": { const h=Math.max(0,num($("#punchH").value,0)); if(!h) return toast("Enter how many hours you studied today."); const courses=coursesArr().filter(c=>c.status==="active").map(c=>c.id);
+      await dispatch("punch.set",{date:today(),patch:{done:true,hours:h,courses}}); toast("Study logged."); break; }
+    case "unpunch": await dispatch("punch.set",{date:today(),patch:null}); break;
+    case "verifyPreview": { const w=window.open(URL.createObjectURL(new Blob([buildVerificationPage()],{type:"text/html"})),"_blank"); if(!w) toast("Allow pop-ups to see the preview, or download the page."); break; }
+    case "verifyDownload": download(new Blob([buildVerificationPage()],{type:"text/html"}),`${slug((G.profile?.name||"")+" "+S.meta.title)||"verification"}.html`); toast("Verification page downloaded. Publish it on a web host of your choice."); break;
+    case "install": if(INSTALL_EVT){ INSTALL_EVT.prompt(); try{ await INSTALL_EVT.userChoice; }catch(e){} INSTALL_EVT=null; render(); } break;
+    case "introDone": S.introDone=true; await dbPut("kv",S,stateKey(S.id)); render(); break;
+    case "toggleOrg": ORG=!ORG; if(!ORG) NEWC=false; render(); break;
+    case "toggleNew": NEWC=!NEWC; render(); if(NEWC) $("#ncName")?.focus(); break;
+    case "createCourse": {
+      const name=$("#ncName").value.trim(); if(!name) return toast("Give the course a name.");
+      const pos=Math.max(1,num($("#ncPos").value,coursesArr().length+1)); const sem=$("#ncSem").value||null;
+      const mode=document.querySelector('input[name="ncMode"]:checked')?.value||"keep"; const id=uid();
+      const kind=$("#ncKind")?.value||"obrig";
+      await dispatch("course.add",{course:{id,num:coursesArr().length+1,kind,chosen:true,name,hours:DEFAULT_HOURS,prereq:[],semesterId:mode==="keep"?sem:null,status:"planned",startedAt:"",doneAt:"",notes:"",refs:[],refLabel:"",refUrl:"",lists:listsFor(kind),minDone:0}});
+      await dispatch("course.renumber",{id,to:pos});
+      if(mode==="reflow"){ const r=reflow(S); await dispatch("plan.fill",r); }
+      NEWC=false; render(); toast("Course added."); break; }
+    case "reflow": { const r=reflow(S); if(!Object.keys(r.assign).length) return toast("No planned courses to rearrange.");
+      if(!await ask(`Rearrange the planned courses in catalog order, ${S.settings.perSemester} per term? Courses in progress and completed courses stay where they are.`,"Rearrange")) return;
+      await dispatch("plan.fill",r); toast("Plan rearranged."); break; }
+    case "addSem": { const n=semsArr().length; const p=Math.max(1,Math.min(num($("#semPos").value,n+1),n+1));
+      await dispatch("sem.insert",{at:p-1,sem:{id:uid()}}); toast(`Term ${p} added; the following terms were renumbered.`); break; }
+    case "delSem": { const n=semsArr().length; const p=num($("#semPos").value,0); if(p<1||p>n) return toast(`Choose a number from 1 to ${n}.`);
+      const x=semsArr()[p-1]; const k=inSem(x.id).length;
+      if(!await ask(`Delete ${x.name}?${k?` Its ${k} courses will have no term; use Rearrange to place them again.`:""} The following terms are renumbered.`,"Delete term",true)) return;
+      await dispatch("sem.remove",{id:x.id}); toast(`Term ${p} deleted.`); break; }
+    case "delCourse": { const id=OPEN_COURSE; const c=S.courses[id];
+      { const t=structuredClone(S); delete t.courses[id]; const pr=structureProblems(t); if(pr.length) return toast("This course cannot be deleted: "+pr[0]); }
+      if(await ask(`Delete ${cname(c)}? It is removed from other courses' prerequisites. The books stay in the library.`,"Delete course",true)){
+        $("#dlg").close(); OPEN_COURSE=null; await dispatch("course.remove",{id}); toast("Course deleted."); }
+      break; }
+    case "addRef": { const bid=$("#addBook").value; if(!bid) return toast("Choose a book from the list."); const c=S.courses[OPEN_COURSE];
+      await dispatch("course.update",{id:c.id,patch:{refs:[...c.refs,{bookId:bid,role:$("#addRole").value,chapters:""}]}}); break; }
+    case "newBook": { const c=S.courses[OPEN_COURSE]; const id="b-"+uid();
+      await dispatch("book.add",{book:{id,authors:"",title:"New book",edition:"",publisher:"",year:"",link:"",url:""}});
+      EDIT_BOOK=id; await dispatch("course.update",{id:c.id,patch:{refs:[...c.refs,{bookId:id,role:$("#addRole")?.value||"complementar",chapters:""}]}}); break; }
+    case "cancelEdit": EDIT_ID=null; render(); break;
+    case "saveItem": {
+      const ed=EDIT_ID&&S.agenda[EDIT_ID]; const kind=ed?ed.kind:ADD_KIND; let data;
+      if(kind==="note"){ const text=$("#agText").value.trim(); if(!text) return toast("Write the note."); data={text}; }
+      else { const title=$("#agTitle").value.trim(); if(!title) return toast("Give the event a name."); const cid=$("#agCourse").value||null;
+        data={title,time:$("#agTime").value,courseId:cid,courseLabel:cid&&S.courses[cid]?cname(S.courses[cid]):""}; }
+      if(ed){ EDIT_ID=null; await dispatch("agenda.update",{id:ed.id,patch:data}); toast("Changes saved."); }
+      else { await dispatch("agenda.add",{item:{id:uid(),date:CAL.sel,kind,...data}}); toast(kind==="note"?"Note saved.":"Event saved."); }
+      break; }
+    case "importFile": $("#courseIn").click(); break;
+    case "importUrl": { const u=$("#importUrl").value.trim(); if(!/^https?:\/\//.test(u)) return toast("Paste a link that starts with https://");
+      try{ const r=await fetch(u); if(!r.ok) throw new Error(`o servidor respondeu ${r.status}`); const t=await r.text();
+        const data=/\.csv(\?|$)/i.test(u)?csvToData(t, decodeURIComponent(u.split("/").pop().replace(/\.csv.*$/i,""))):JSON.parse(t); await importCourse(data); }
+      catch(e){ toast("Could not load: "+e.message); } break; }
+    case "exportCourse": download(new Blob([JSON.stringify(exportData(S),null,1)],{type:"application/json"}),`${slug(S.meta.title)||"program"}.json`); toast("Program exported, without your progress."); break;
+    case "csvTemplate": download(new Blob([csvTemplate()],{type:"text/csv"}),"program-template.csv"); break;
+    case "backup": await backup(); break;
+    case "restore": $("#restoreIn").click(); break;
+    case "ics": exportICS(); break;
+    case "wipe": if(await ask("Erase all programs and the profile on this device? This cannot be undone; save the configuration first.","Erase everything",true)){
+        for(const id of Object.keys(PROGS.list)) await dbDel("kv",stateKey(id));
+        await dbClear("events"); G={profile:{}}; await dbPut("kv",G,"global");
+        PROGS={active:"",list:{}}; await saveProgs(); S=null; render(); toast("Data erased."); } break;
+  }
+});
+document.addEventListener("change", async e=>{
+  const el=e.target; const ds=el.dataset;
+  if(ds.cf && OPEN_COURSE){
+    let v=el.value;
+    if(ds.cf==="hours" && num(v,0)<STANDARD.hours){ el.value=S.courses[OPEN_COURSE].hours; return toast(`Courses carry at least ${STANDARD.hours} hours.`); }
+    if(ds.cf==="kind"){ const t=structuredClone(S); t.courses[OPEN_COURSE].kind=v; const pr=structureProblems(t);
+      if(pr.length){ el.value=S.courses[OPEN_COURSE].kind; return toast("This change would break the minimum structure: "+pr[0]); } }
+    if(["num","hours","minDone"].includes(ds.cf)) v=Math.max(0,num(v,0));
+    if(ds.cf==="semesterId" && !v) v=null;
+    if(ds.cf==="num") return dispatch("course.renumber",{id:OPEN_COURSE,to:v});
+    if(ds.cf==="kind" && (v==="sem"||S.courses[OPEN_COURSE].kind==="sem")) return dispatch("course.update",{id:OPEN_COURSE,patch:{kind:v,lists:listsFor(v)}});
+    return dispatch("course.update",{id:OPEN_COURSE,patch:{[ds.cf]:v},today:today()});
+  }
+  if(ds.pre && OPEN_COURSE){ const c=S.courses[OPEN_COURSE]; const set=new Set(c.prereq); el.checked?set.add(ds.pre):set.delete(ds.pre); return dispatch("course.update",{id:OPEN_COURSE,patch:{prereq:[...set]}}); }
+  if(ds.lf && OPEN_COURSE){ const [key,field]=ds.lf.split("|"); let v=el.value; const patch={};
+    if(field==="questions") v=Math.max(1,num(v,25)); patch[field]=v;
+    return dispatch("list.update",{courseId:OPEN_COURSE,key,patch}); }
+  if(ds.refch!==undefined && OPEN_COURSE){ const c=S.courses[OPEN_COURSE]; const refs=structuredClone(c.refs); refs[+ds.refch].chapters=el.value.trim(); return dispatch("course.update",{id:c.id,patch:{refs}}); }
+  if(ds.refrole!==undefined && OPEN_COURSE){ const c=S.courses[OPEN_COURSE]; const refs=structuredClone(c.refs); refs[+ds.refrole].role=el.value; return dispatch("course.update",{id:c.id,patch:{refs}}); }
+  if(ds.bf){ const [id,k]=ds.bf.split("|"); return dispatch("book.update",{id,patch:{[k]:el.value.trim()}}); }
+  if(ds.set){ let v=Math.max(ds.set==="minSem"?0:1,num(el.value,1));
+    const floor=ds.set==="minTotal"?STANDARD.courses:ds.set==="minSem"?STANDARD.seminars:ds.set==="minElet"?STANDARD.electives:0;
+    if(v<floor){ v=floor; el.value=v; toast(`The minimum is ${floor}.`); } await dispatch("settings.set",{patch:{[ds.set]:v}},{quiet:true});
+    if(ds.set==="perSemester"){ const r=reflow(S); if(Object.keys(r.assign).length){ await dispatch("plan.fill",r,{quiet:true}); toast(`Plan rearranged with ${v} courses per term.`); } }
+    else if(ds.set==="semMonths"||ds.set==="perYear") toast("Dates and years recalculated.");
+    return; }
+  if(ds.profile!==undefined){ return dispatch("profile.set",{patch:{[ds.profile]:el.value.trim()}},{quiet:true}); }
+  if(el.id==="progSel"){ return switchProgram(el.value); }
+  if(ds.meta){ return dispatch("meta.update",{patch:{[ds.meta]:el.value.trim()}},{quiet:true}); }
+  if(ds.setdate && el.value){ await dispatch("settings.set",{patch:{[ds.setdate]:el.value}},{quiet:true}); return toast("Dates recalculated."); }
+});
+document.addEventListener("toggle", e=>{ const el=e.target; if(el.dataset?.sec){ el.open?OPEN_SEC.add(el.dataset.sec):OPEN_SEC.delete(el.dataset.sec); } }, true);
+$("#dlg").addEventListener("close",()=>{ OPEN_COURSE=null; EDIT_BOOK=null; render(); });
+
+/* ---------- Startup ---------- */
+(async function init(){
+  try{
+    DB=await openDB();
+    DEVICE=await dbGet("kv","device"); if(!DEVICE){ DEVICE=uid(); await dbPut("kv",DEVICE,"device"); }
+    G=await dbGet("kv","global")||{profile:{}}; G.profile=G.profile||{};
+    PROGS=await dbGet("kv","programs");
+    if(!PROGS){ PROGS={active:"",list:{}}; await dbPut("kv",PROGS,"programs"); await dbPut("kv",G,"global"); }
+    const st=PROGS.active?await dbGet("kv",stateKey(PROGS.active)):null;
+    if(st){ S=normalize(st); S.id=PROGS.active; } else S=null;
+    if(navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
+  }catch(e){
+    S=null; PROGS={active:"",list:{}}; DEVICE="local-only";
+    setTimeout(()=>toast("This browser does not allow local storage; changes are lost when you close it."),500);
+  }
+  applyTheme(getTheme()); try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>applyTheme(getTheme())); }catch(e){}
+  renderSave(); render();
+  if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")){
+    const had=!!navigator.serviceWorker.controller; let reloaded=false;
+    navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(had && !reloaded){ reloaded=true; location.reload(); } });
+    navigator.serviceWorker.register("sw.js").then(r=>r.update()).catch(()=>{});
+  }
+})();
+</script>
+</body>
+</html>
